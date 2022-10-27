@@ -1,0 +1,352 @@
+\documentclass[a4paper, 14pt, titlepage, fleqn]{extarticle}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{csquotes}
+\usepackage{xcolor}
+
+
+\DeclareMathOperator\artanh{artanh}
+
+\lstdefinestyle{mystyle}{
+    basicstyle={\small\ttfamily},
+    commentstyle=\color{green},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=none,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=single,
+    aboveskip=3mm,
+    belowskip=3mm,
+}
+\lstset{style=mystyle}
+
+\author {
+	Группа Б9120-01.03.02миопд\\
+	Агличеев Александр
+}
+\title {
+	Отчёт по лабораторной работе №1
+}
+\date {
+	\today
+}
+
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\pagebreak	
+
+	\section*{Введение}
+	\addcontentsline{toc}{section}{Введение}
+		В данной лабораторной работе мне нужно вычислить неопределенный интеграл, решить численно четыремя методами определенный интеграл на языке \textquote{Go} и найти общее решение дифференциальных уравнение с помощью программ компьютерной математики.
+	
+	\pagebreak
+	\section*{Задание 1}
+	\addcontentsline{toc}{section}{Задание 1}
+		\subsection*{Постановка задачи}
+		\addcontentsline{toc}{subsection}{Постановка задачи}
+			\noindent Найти следующий интеграл с подробным описанием всех действий:
+			\[\int \frac {\ln{(x^2+1)}} {x^2} \ dx\]
+	
+		\subsection*{Решение}
+		\addcontentsline{toc}{subsection}{Решение}
+			\begin{gather*}
+				\int \frac {\ln{(x^2+1)}} {x^2} \ dx = 
+				(*)\begin{vmatrix}
+					u = \ln{(x^2+1)} & du = \dfrac{2x}{x^2+1} \\
+					dv = \dfrac{dx}{x^2} & v = -\dfrac{1}{x}
+				\end{vmatrix}(*)
+				= -\dfrac{\ln{(x^2+1)}}{x} + \\ 
+				+ 2\int \dfrac{dx}{x^2+1} =  2\arctg{x} - \dfrac{\ln{(x^2+1)}}{x} + C
+			\end{gather*}\\
+	
+			\textit{Ответ:} \( \displaystyle \int \frac {\ln{(x^2+1)}} {x^2} \ dx =2\arctg{x} - \frac{\ln{(x^2+1)}}{x} + C \)
+
+	\pagebreak
+	\section*{Задание 2}
+	\addcontentsline{toc}{section}{Задание 2}
+		\subsection*{Постановка задачи}
+		\addcontentsline{toc}{subsection}{Постановка задачи}
+			\noindent Четыремя методами численно вычислить следующий интеграл с точностью \(\varepsilon = 10^{-4}\) . Реализацию решения проводить на языке \textquote{Go}:
+			\[\int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx\]
+		\subsection*{Решение}
+		\addcontentsline{toc}{subsection}{Решение}
+			\begin{enumerate}
+				\item Метод левых  прямоугольников при \(n=15041\):\\
+					Формула вычисления:
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx \approx \sum _{i=0} ^{n-1} f(x_i) \cdot \Delta x\]
+					Вычисленное значение:
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx \approx 1.070698, \; \Delta = 0.000098\]
+				\item Метод правых  прямоугольников  при \(n=15042\):\\
+					Формула вычисления:
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx \approx \sum _{i=1} ^{n} f(x_i) \cdot \Delta x\]
+					Вычисленное значение:
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx \approx 1.070704,  \; \Delta = 0.000006 \]
+				\pagebreak
+				\item Метод средних  прямоугольников  при \(n=15042\):\\
+					Формула вычисления:
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx \approx \sum _{i=0} ^{n-1} f\bigg(\dfrac{x_i + x_{i+1}}{2}\bigg) \cdot \Delta x\]
+					Вычисленное значение:
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx \approx 1.070704,  \; \Delta = 0.000006 \]
+				\item Метод трапеций  при \(n=15042\):\\
+					Формула вычисления:
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx \approx \sum _{i=0} ^{n-1} \dfrac {f(x_i) + f(x_{i+1})}{2} \cdot \Delta x\]
+					Вычисленное значение:	
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx \approx 1.070724,  \; \Delta =0.000026 \]
+				\item Точное решение:
+					\[ \int_{1}^{\infty} \dfrac{\sin{\lfloor x \rfloor}}{\lfloor x \rfloor} dx = \dfrac{1}{2}(\pi - 1)  \approx 1.070796 \]
+			\end{enumerate}
+		\pagebreak
+		\subsection*{Код программ}
+		\addcontentsline{toc}{subsection}{Код программ}
+		\begin{enumerate}
+			\item Метод левых прямоугольников:			
+				\begin{lstlisting}[language=Go]
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func integral(x float64) float64 {
+    var y = math.Sin(math.Floor(x)) / math.Floor(x)
+    return y
+}
+
+func checkPrecision(res float64, ans float64) bool {
+    if math.Abs(res - ans) <=  0.0001 {
+        return true
+    }
+    return false
+}
+
+func leftRectangles(deltaX float64, ans float64) float64 {
+    var x float64 = 1
+    var res float64 = 0
+    var count = 0
+    for {
+        count++
+        var y = integral(x)
+        res += y * deltaX
+        x += deltaX
+        if checkPrecision(res, ans) {
+            break
+        }
+    }
+    fmt.Println(count)
+    return res
+}
+
+
+func main() {
+    const ans float64 = 1.070796
+    const delta float64 = 0.0001 
+    fmt.Println(leftRectangles(delta, ans))
+}
+				\end{lstlisting}
+
+			\pagebreak
+			\item Метод правых прямоугольников:
+				\begin{lstlisting}[language=Go]
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func integral(x float64) float64 {
+    var y = math.Sin(math.Floor(x)) / math.Floor(x)
+    return y
+}
+
+func checkPrecision(res float64, ans float64) bool {
+    if math.Abs(res - ans) <=  0.0001 {
+        return true
+    }
+    return false
+}
+
+func rightRectangles(deltaX float64, ans float64) float64 {
+    var x float64 = 1
+    var res float64 = 0
+    var count = 0
+    for {
+        count++
+        x += deltaX
+        var y = integral(x)
+        res += y * deltaX
+        if checkPrecision(res, ans) {
+            break
+        }
+    }
+    fmt.Println(count)
+    return res
+}
+
+
+func main() {
+    const ans float64 = 1.070796
+    const delta float64 = 0.0001 
+    fmt.Println(rightRectangles(delta, ans))
+}
+				\end{lstlisting}
+
+			\pagebreak
+			\item Метод средних прямоугольников:
+				\begin{lstlisting}[language=Go]
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func integral(x float64) float64 {
+    var y = math.Sin(math.Floor(x)) / math.Floor(x)
+    return y
+}
+
+func checkPrecision(res float64, ans float64) bool {
+    if math.Abs(res - ans) <=  0.0001 {
+        return true
+    }
+    return false
+}
+
+func midRectangles(deltaX float64, ans float64) float64 {
+    var x float64 = 1
+    var res float64 = 0
+    var count = 0
+    for {
+        count++
+        var y = integral((x + x + deltaX) / 2)
+        res += y * deltaX
+        x += deltaX
+        if checkPrecision(res, ans) {
+            break
+        }
+    }
+    fmt.Println(count)
+    return res
+}
+
+
+func main() {
+    const ans float64 = 1.070796
+    const delta float64 = 0.0001 
+    fmt.Println(midRectangles(delta, ans))
+}
+				\end{lstlisting}
+
+			\pagebreak
+			\item Метод трапеций:
+				\begin{lstlisting}[language=Go]
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func integral(x float64) float64 {
+    var y = math.Sin(math.Floor(x)) / math.Floor(x)
+    return y
+}
+
+func checkPrecision(res float64, ans float64) bool {
+    if math.Abs(res - ans) <=  0.0001 {
+        return true
+    }
+    return false
+}
+
+func trapezoids(deltaX float64, ans float64) float64 {
+    var x float64 = 1
+    var res float64 = 0
+    var count = 0
+    for {
+        count++
+        var y = (integral(x) + integral(x + deltaX)) / 2
+        x += deltaX
+        res += y * deltaX
+        if checkPrecision(res, ans) {
+            break
+        }
+    }
+    fmt.Println(count)
+    return res
+}
+
+
+func main() {
+    const ans float64 = 1.070796
+    const delta float64 = 0.0001
+    fmt.Println(trapezoids(delta, ans))
+}
+				\end{lstlisting}
+		\end{enumerate}
+
+	\pagebreak
+	\section*{Задание 3}
+	\addcontentsline{toc}{section}{Задание 3}
+		\subsection*{Постановка задачи}
+		\addcontentsline{toc}{subsection}{Постановка задачи}
+		\noindent Для следующих дифференциальных уравнений определить тип и найти общее
+		решение с помощью программ компьютерной математики:
+		\begin{enumerate}
+			\item \( xy' = \dfrac{\sec{xy}}{y} - y \)
+			\item \( -(12x + 4y)y' =  x - 8y - 3\)
+			\item \( y' = \dfrac{\csc{y}}{y + x \cdot \sec{y}} \)
+			\item \( y' = \dfrac{\cos^2{y} \cdot \cos{x}}{\sin^2{x} - 1} \)
+		\end{enumerate}
+	
+	
+		\subsection*{Решение}
+		\addcontentsline{toc}{subsection}{Решение}
+			\noindent Поиск решения будет проводиться в системе компьютерной математики Wolfram Mathematica.
+			\begin{enumerate}
+				\item \( xy' = \dfrac{\sec{xy}}{y} - y \)
+
+					\textit{Тип уравнения:} Однородное уравнение
+		
+					\textit{Ответ:}
+					\( 2\cos{xy} + 2xy \cdot \sin{xy} - x^2 = C \)
+		
+				\item \( -(12x + 4y)y' =  x - 8y - 3\)
+		
+					\textit{Тип уравнения:} Уравнение вида \( y' = f\bigg(\dfrac{a_1x+b_1y+c_1}{ax+by+c}\bigg) \), приводящееся к однородному
+		
+					\textit{Ответ:} \( \dfrac{25x-3}{10y+5x+3}-\ln{(10y+5x+3)} = C\)
+				\pagebreak
+				\item \( y' = \dfrac{\csc{y}}{y + x \cdot \sec{y}} \)
+		
+					\textit{Тип уравнения:} Линейное уравнение по переменной \( x \)
+		
+					\textit{Ответ:} \( x = C\sec{y} + \dfrac{1}{8}\sec{y}\cdot(\sin{2y} - 2y\cos{2y}) \)
+		
+				\item \( y' = \dfrac{\cos^2{y} \cdot \cos{x}}{\sin^2{x} - 1} \)
+		
+					\textit{Тип уравнения:} Уравнение с разделяющимся переменными
+	
+					\textit{Ответ:} \( \tg{y} = C - \artanh{(\sin{x})} \)
+			\end{enumerate}
+
+
+
+	\section*{Заключение}
+	\addcontentsline{toc}{section}{Заключение}
+		\noindent Я решил неопределенный интеграл, написал программу для численного решения интегралов на языке программирования \textquote{Go} и пользовался Wolfram Mathematica для решения дифференциальных уравнений. Оформлял отчёт по работе  в \textquote{TeX Live}.
+
+\end{document}	

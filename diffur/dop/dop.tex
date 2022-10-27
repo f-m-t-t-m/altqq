@@ -1,0 +1,27 @@
+\documentclass[a4paper, 14pt, titlepage, fleqn]{extarticle}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+
+\begin{document}
+	\( \dot{x} = \begin{pmatrix} 1 &  -4 \\9 & -11\end{pmatrix} x \)
+
+	\(\begin{cases}
+		\dot{x} = x - 4y \\
+		\dot{y} = 9x - 11y
+	\end{cases}\)
+
+	\( y = \dfrac{x - \dot{x}}{4} \)
+
+	\( \dot{y} = \dfrac{\dot{x} - \ddot{x}}{4} \)
+
+	\( \ddot{x} + 10\dot{x} + 20x = 0 \)
+
+	\( (D + 5I)^2[x] = 0\)
+
+	\( D  = -5I \)
+	
+	\(\begin{cases}
+		x = C_1e^{-5t} + C_2te^{-5t}\\
+		y = 6C_1e^{-5t} + C_2e^{-5t}(6t-1)
+	\end{cases}\)
+\end{document}	

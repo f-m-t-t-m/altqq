@@ -1,0 +1,13 @@
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{2}{}%
+\contentsline {section}{Задание 1}{3}{}%
+\contentsline {subsection}{Постановка задачи}{3}{}%
+\contentsline {subsection}{Решение}{3}{}%
+\contentsline {section}{Задание 2}{4}{}%
+\contentsline {subsection}{Постановка задачи}{4}{}%
+\contentsline {subsection}{Решение}{4}{}%
+\contentsline {subsection}{Код программ}{6}{}%
+\contentsline {section}{Задание 3}{10}{}%
+\contentsline {subsection}{Постановка задачи}{10}{}%
+\contentsline {subsection}{Решение}{10}{}%
+\contentsline {section}{Заключение}{11}{}%
