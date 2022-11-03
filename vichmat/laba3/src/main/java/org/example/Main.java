@@ -47,34 +47,35 @@ public class Main {
 
     private static Double newton1(Function<Double, Double> func, ArrayList<Double> grid,
                                  Double x) {
-        double t = (x - grid.get(0)) / h;
+        double x0 = grid.get(0);
+        double t = (x - x0) / h;
         double num = 1.;
-        double res = func.apply(grid.get(0));
+        double res = func.apply(x0);
         for(int i = 1; i < grid.size(); i++) {
            num *= (t - (i - 1));
-           res += num * finiteDifference(func, i, grid.get(0), i/(double)2) / CombinatoricsUtils.factorial(i);
+           res += num * finiteDifference(func, i, x0, i/(double)2) / CombinatoricsUtils.factorial(i);
         }
         return res;
     }
 
     private static Double newton2(Function<Double, Double> func, ArrayList<Double> grid,
                                   Double x) {
-        double t = (x - grid.get(grid.size()-1)) / h;
+        double x0 = grid.get(grid.size()-1);
+        double t = (x - x0) / h;
         double num = 1.;
-        double res = func.apply(grid.get(grid.size()-1));
+        double res = func.apply(x0);
         for(int i = 1; i < grid.size(); i++) {
             num *= (t + (i - 1));
-            res += num * finiteDifference(func, i, grid.get(grid.size()-1),
-                    -i/(double)2) / CombinatoricsUtils.factorial(i);
+            res += num * finiteDifference(func, i, x0, -i/(double)2) / CombinatoricsUtils.factorial(i);
         }
         return res;
     }
 
     private static Double gauss1(Function<Double, Double> func, ArrayList<Double> grid,
                                  Double x) {
+        double x0 = 0;
         double t = 0;
         double res = 0;
-        double x0 = 0;
         int n = grid.size() - 1;
         for(int i = 0; i < grid.size(); ++i) {
             if (grid.get(i) > x) {
