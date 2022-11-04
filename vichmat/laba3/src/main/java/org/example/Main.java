@@ -3,8 +3,7 @@ package org.example;
 import org.apache.commons.math3.analysis.differentiation.DerivativeStructure;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.function.Function;
 
 public class Main {
@@ -110,6 +109,16 @@ public class Main {
         return res;
     }
 
+    private static ArrayList<Double> derivatives(ArrayList<Double> grid) {
+        ArrayList<Double> res = new ArrayList<>();
+        for (double gridX: grid) {
+            DerivativeStructure x_ = new DerivativeStructure(1, 11, 0, gridX);
+            DerivativeStructure der11 = x_.pow(2).add(x_.log());
+            res.add(der11.getPartialDerivative(11));
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
         ArrayList<Double> grid = getGrid();
 
@@ -119,16 +128,23 @@ public class Main {
         System.out.println("Max R = " + Math.abs(Collections.max(remainder(grid, xs.get(0)))));
         System.out.println("Min R = " + Math.abs(Collections.min(remainder(grid, xs.get(0)))));
 
+
         System.out.println("\n---------x***(newton 2)---------");
         Double newton2 = newton2(new Func(), grid, xs.get(1));
         System.out.println("newton2(x***) - f(x***) = " + Math.abs(newton2 - new Func().apply(xs.get(1))));
         System.out.println("Max R = " + Collections.max(remainder(grid, xs.get(1))));
         System.out.println("Min R = " + Collections.min(remainder(grid, xs.get(1))));
 
+
         System.out.println("\n---------x****(gauss 1)---------");
         Double gauss1 = gauss1(new Func(), grid, xs.get(2));
         System.out.println("gauss1(x****) - f(x****) = " + Math.abs(gauss1 - new Func().apply(xs.get(2))));
         System.out.println("Max R = " + Collections.max(remainder(grid, xs.get(2))));
         System.out.println("Min R = " + Collections.min(remainder(grid, xs.get(2))));
+
+
+        System.out.println("\n---------derivatives---------");
+        System.out.println("Max 11 derivative = " + Collections.max(derivatives(grid)));
+        System.out.println("Min 11 derivative = " + Collections.min(derivatives(grid)));
     }
 }
