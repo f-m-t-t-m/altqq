@@ -8,20 +8,30 @@ import java.util.ArrayList;
 import java.util.function.Function;
 
 public class Main {
-
-    private static final Integer T0 = 293;
-
+    private static final Integer COOLING = 0;
+    private static final Integer HEATING = 1;
+    private static final Integer T0 = 291;
+    private static final Integer T_max = 483;
+    private static final Integer T_min = 453;
+    private static Integer state = HEATING;
+    private static Integer thermostat(double T) {
+        if (T >= T_max) {
+            state = COOLING;
+        } else if (T <= T_min) {
+            state = HEATING;
+        }
+        return state.equals(COOLING) ? 0 : 1;
+    }
     private static class Func implements Function<Double, Double> {
-
         @Override
         public Double apply(Double T) {
             double sigma = 5.67E-8;
-            int n = 800;
-            int c = 500;
-            int m = 1;
-            double s = 0.02;
+            int P = 1600;
+            int c = 900;
+            double m = 0.8;
+            double s = 0.01;
             int k = 25;
-            return (n - k * s *(T - T0) - s * sigma *(Math.pow(T, 4) - Math.pow(T0, 4))) / c * m;
+            return (P * thermostat(T)- k * s *(T - T0) - s * sigma *(Math.pow(T, 4) - Math.pow(T0, 4))) / (c * m);
         }
     }
 
@@ -38,7 +48,7 @@ public class Main {
 
     public static void main(String[] args) throws PythonExecutionException, IOException {
         ArrayList<Integer> t = new ArrayList<>();
-        for(int i = 0; i <= 1000; ++i) {
+        for(int i = 0; i <= 1500; ++i) {
             t.add(i);
         }
 
@@ -48,6 +58,7 @@ public class Main {
         plt.plot().add(t, T);
         plt.xlabel("t");
         plt.ylabel("T");
+        plt.savefig("fig8.svg");
         plt.show();
     }
 }

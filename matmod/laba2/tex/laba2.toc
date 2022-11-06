@@ -3,4 +3,6 @@
 \contentsline {section}{\numberline {2}Информация об объекте}{3}{}%
 \contentsline {section}{\numberline {3}Создание математической модели}{3}{}%
 \contentsline {section}{\numberline {4}Анализ модели}{5}{}%
-\contentsline {section}{\numberline {5}Вывод}{5}{}%
+\contentsline {subsection}{\numberline {4.1}Утюг без терморегулятора}{5}{}%
+\contentsline {subsection}{\numberline {4.2}Утюг с терморегулятором}{11}{}%
+\contentsline {section}{\numberline {5}Вывод}{18}{}%
