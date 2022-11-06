@@ -1,0 +1,106 @@
+\documentclass[a4paper, 14pt]{extarticle}
+\usepackage{enumitem}
+\usepackage{fefutitle}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[justification=centering]{caption}
+\usepackage{float}
+
+\lstdefinestyle{mystyle}{
+	basicstyle={\small\ttfamily},
+	keywordstyle=\color{orange},
+	stringstyle=\color{green},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=none,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	aboveskip=3mm,
+	belowskip=3mm,
+}
+\lstset{style=mystyle}
+
+\begin{document}
+	\fefutitle{2}
+	\pagebreak	
+
+	\section{Определение цели}
+		В данной лабораторной необходимо создать модель электрического утюга с терморегулятором и без него.
+		Проанализировать полученную модуль.
+
+	\section{Информация об объекте}
+		Утюг - нагревающийся металлический прибор. Работа утюга с электрическим нагревом основана на выделении тепловой энергии при прохождении электрического тока через нагревательный элемент. Температура нагревательного элемента сообщается подошве утюга, которая также нагревается.
+		
+		Температура нагрева задается отдельным терморегулятором, главная функция которого заключается в своевременном отключении подачи электроэнергии в соответствии с заданным режимом.
+
+	\section{Создание математической модели}
+		Введем характеристики, которые необходимы для создания модели:
+		\begin{enumerate}[leftmargin=3\parindent, itemsep=0mm]
+			\item m - масса подошвы утюга
+			\item c - удельная теплоёмкость подошвы утюга
+			\item S - площать поверхности подошвы
+			\item P - электрическая мощность утюга
+			\item T - температура утюга
+			\item $T_a$ - температура окружающей среды
+		\end{enumerate}
+	
+		Количество теплоты(\(\Delta Q\)), которое получает тело при увеличении его температуры на величину 
+		\( \Delta T = T_2 - T_1 \) вычисляется так:
+		\[ \Delta Q = cm \Delta T \], где \( T_1, T_2\) - температуры тела до нагрева и после.
+		
+		Количество теплоты, отдаваемое утюгом в окружающую среду вычисляется по закону Ньютона-Рихмана:
+		\[ Q = kS(T-T_a) \Delta t \]
+		, где \(k\) - коэффициент теплообмена
+			
+		Нагретые тела излучают энергию в виде электромагнитных волн различной длины. Тепловое излучение:
+		\[ E = \sigma T^4 \]
+		, где \( \sigma = 5.67 \cdot 10^{-8} \) - постоянная Стефана-Больцмана
+		
+		Составим уравнение теплового баланса:
+		\[ \Delta Q = P\Delta t - kS(T-T_a) \Delta t - S \sigma T^4 \Delta t +  S \sigma T_a^4 \Delta t\]
+		\[ cm \Delta T = P\Delta t - kS(T-T_a) \Delta t - S \sigma (T^4 - T_a) \Delta t \]
+		
+		Поделим на \( \Delta t\) и умножим на \(cm\)
+		\[ \dfrac{\Delta T}{\Delta t} 
+		= \dfrac{P - kS(T-T_a) - S \sigma T^4 +  S \sigma T_a^4}{cm}\]
+		
+		Перейдём к дифференциальному уравнению и добавим начальное условие(в начальный момент времени
+		температура подошвы утюга равна температуре окружающей среды):
+		\[
+			\begin{cases}
+				\dfrac{\Delta T}{\Delta t} = \dfrac{P - kS(T-T_a) - S \sigma (T^4 - T_a) \Delta t}{cm},\\
+				T(0) = T_a.
+			\end{cases}
+		\]
+		
+		Для утюга с терморегулятором добавим функцию, которая будет отвечать за включение и отключение утюга,
+		учитывая заданную максимальную температуру \( T_{max} \)
+		\[ H(T) = 
+			\begin{cases}
+				0, \text{если} (T_{max} - T) <= 5\\
+				1, \text{если} (T_{max} - T) > 5
+			\end{cases} 
+		\]
+		
+		Тогда дифференциальное уравнение примет следующий вид:
+		\[
+		\begin{cases}
+			\dfrac{\Delta T}{\Delta t} = \dfrac{ P\cdot H(T) - kS(T-T_a) - S \sigma (T^4 - T_a) \Delta t}{cm},\\
+			T(0) = T_a.
+		\end{cases}
+		\]
+	
+	\section{Анализ модели}
+	
+	\section{Вывод}
+		Таким образом, построена математическая модель утюга с терморегулятором и без него. Она позволяет получить график температур от времени для утюгов с различными площадями подошвы, теплопроводностями и мощностями. 
+		
+\end{document}	
