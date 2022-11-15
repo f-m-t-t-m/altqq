@@ -1,10 +1,10 @@
 \babel@toc {russian}{}\relax 
 \contentsline {section}{\numberline {1}Определение цели}{3}{}%
-\contentsline {section}{\numberline {2}Информация об объекте}{3}{}%
+\contentsline {section}{\numberline {2}Информация для создания модели}{3}{}%
 \contentsline {section}{\numberline {3}Создание математической модели}{3}{}%
 \contentsline {subsection}{\numberline {3.1}Движение под углом}{3}{}%
 \contentsline {subsection}{\numberline {3.2}Движение по прямой}{4}{}%
 \contentsline {section}{\numberline {4}Анализ модели}{4}{}%
-\contentsline {subsection}{\numberline {4.1}Движение под углом}{5}{}%
+\contentsline {subsection}{\numberline {4.1}Движение под углом}{4}{}%
 \contentsline {subsection}{\numberline {4.2}Движение по прямой}{9}{}%
 \contentsline {section}{\numberline {5}Вывод}{11}{}%

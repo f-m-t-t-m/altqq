@@ -11,7 +11,7 @@ public class Main {
 
         @Override
         public Double apply(Double x) {
-            return 2*x - Math.cos(x);
+            return Math.pow(x, 2) + Math.log(x);
         }
 
     }
@@ -20,7 +20,7 @@ public class Main {
 
         @Override
         public Double apply(Double x) {
-            return 2 + Math.sin(x);
+            return 2 - Math.pow(x, -2);
         }
 
     }
@@ -29,13 +29,12 @@ public class Main {
 
         @Override
         public Double apply(Double x) {
-            return Math.cos(x);
+            return -6 * Math.pow(x, -4);
         }
 
     }
-
-    static double a = 0.1;
-    static double b = 0.6;
+    static double a = 0.4;
+    static double b = 0.9;
 
     public static ArrayList<Double> getGrid(double a, double b, int N) {
         ArrayList<Double> grid = new ArrayList<>();
@@ -82,7 +81,6 @@ public class Main {
                 break;
             }
         }
-
         return xs;
     }
 
@@ -146,17 +144,17 @@ public class Main {
         ArrayList<Double> grid = getGrid(a, b, 10);
 
         System.out.println("\n------------Lagrange First Order------------");
-        double lfo = lagrange(grid, 0.44, new Func(),1, new FuncDerivativeSecondOrder());
+        double lfo = lagrange(grid, 0.52, new Func(),1, new FuncDerivativeSecondOrder());
 
         System.out.println("\n------------Lagrange Second Order------------");
-        double lso = lagrange(grid, 0.44, new Func(),2, new FuncDerivativeThirdOrder());
+        double lso = lagrange(grid, 0.52, new Func(),2, new FuncDerivativeThirdOrder());
 
         System.out.println("\n------------Newton First Order------------");
-        double nfo = newtonFirstOrder(grid, 0.52, new Func());
+        double nfo = newtonFirstOrder(grid, 0.43, new Func());
         System.out.println("N_1 - L_1 = " + (lfo - nfo));
 
         System.out.println("\n------------Newton Second Order------------");
-        double nso =newtonSecondOrder(grid, 0.52, new Func());
+        double nso =newtonSecondOrder(grid, 0.43, new Func());
         System.out.println("N_2 - L_2 = " + (lso - nso));
     }
 
