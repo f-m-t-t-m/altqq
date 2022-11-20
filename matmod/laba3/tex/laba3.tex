@@ -29,13 +29,122 @@
 		С учетом этого, система уравнений модели такова:
 		\[ \begin{cases}
 			\dfrac{dx}{dt} = \alpha x - \beta xy = (\alpha - \beta y)x, \\
-			\dfrac{dy}{dt} = - \gamma y - \delta xy = (\beta x - \gamma)y. \\
+			\dfrac{dy}{dt} = - \gamma y + \delta xy = (\beta x - \gamma)y. \\
 		    \end{cases}
 		 \]
 	
 	\section{Анализ модели}
-
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{1.pdf}
+			\caption[.] {}
+		\end{figure}
+		Если жертв(x) нет, то хищники(y) вымирают экспоненциально.
+	
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{2.pdf}
+			\caption[.] {}
+		\end{figure}
+		Если хищников(y) нет, то популяция жертв растет экспоненциально. 
+		\pagebreak
+		
+		\noindent \[ x = \begin{bmatrix}
+			4 \\ 5
+		\end{bmatrix} \]
+	
+		\noindent\[
+			\alpha = 2,\\
+			\beta = 1,\\
+			\gamma = 2,\\
+			\delta = 1
+		\]
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{3.pdf}
+			\caption[.] {}
+		\end{figure}
+		В начале периода количество жертв возрастает. Вместе с ними растет и количество хищников из-за обилия
+		пищевых ресурсов. Активное поедание жертв приводит к снижению их количества. В следствии уменьшии пищи для хищников, они начинают вымирать. Цикл переодически повторяется.
+		\pagebreak
+		
+		\noindent \[ x = \begin{bmatrix}
+			4 \\ 5
+		\end{bmatrix} \]
+		
+		\noindent\[
+		\alpha = 2,\\
+		\beta = 1,\\
+		\gamma = 1,\\
+		\delta = 1
+		\]
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{4.pdf}
+			\caption[.] {}
+		\end{figure}
+		Увеличение естественной смертности хищников привело к тому, что период и максимальный размер популяции
+		хищников уменьшились.
+		\pagebreak
+		
+		\noindent \[ x = \begin{bmatrix}
+			4 \\ 5
+		\end{bmatrix} \]
+		
+		\noindent\[
+		\alpha = 7,\\
+		\beta = 1,\\
+		\gamma = 1,\\
+		\delta = 1
+		\]
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{5.pdf}
+			\caption[.] {}
+		\end{figure}
+		Увеличение рождаемости жертв приводит к уменьшению длительности периода и увеличению популяции хищников.
+		\pagebreak
+		
+		\noindent \[ x = \begin{bmatrix}
+			4 \\ 5
+		\end{bmatrix} \]
+		
+		\noindent\[
+		\alpha = 5,\\
+		\beta = 1,\\
+		\gamma = 4,\\
+		\delta = 1
+		\]
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{7.pdf}
+			\caption[.] {}
+		\end{figure}
+		При данных параметрах система находится в равновесии: обе популяции неизменны и сбалансированы.
+		\pagebreak
+		
+		Фазовый портрет при:
+		\noindent \[
+					x_0 = \begin{bmatrix} 4 \\ 4 \end{bmatrix}
+					x_1 = \begin{bmatrix} 2 \\ 6 \end{bmatrix} 
+					x_2 = \begin{bmatrix} 3 \\ 2 \end{bmatrix} 
+					x_3 = \begin{bmatrix} 5 \\ 3 \end{bmatrix} 
+					\]
+		
+		\noindent\[
+		\alpha = 2,\\
+		\beta = 0.5,\\
+		\gamma = 1\\
+		\delta = 0.5
+		\]
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{6.pdf}
+			\caption[.] {}
+		\end{figure}
+	
 	\section{Вывод}
-		Таким образом, построена математическая модель утюга с терморегулятором и без него. Она позволяет получить график температур от времени для утюгов с различными площадями подошвы, теплопроводностями и мощностями. 
+		В ходе лабораторной работы была изучена модель Лотки-Вольтерры и реализована с помощью программы
+		Mathcad при разных параметрах. 
 		
 \end{document}	
