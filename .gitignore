@@ -3,4 +3,4 @@
 *.synctex.gz 
 *.aux
 .idea/
-.target/
+target/
