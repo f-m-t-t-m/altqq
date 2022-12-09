@@ -73,7 +73,7 @@
 			Выразим \( \Delta t\) из (3.1.3)
 			\[ \Delta t = \dfrac{h}{\upsilon \sin{\alpha}} \]
 			подставим в (3.1.4) и получим
-			\[ P = mg \upsilon \sin{\alpha} } \]
+			\[ P = mg \upsilon \sin{\alpha} \]
 		\subsection{Модель при движении по прямой дороге}
 			Для вычисления мощности при движении по прямой дороге воспользуемся
 			законом сохранения энергии
@@ -81,103 +81,68 @@
 			Выразим P
 			\[ P = \dfrac{m\upsilon^2}{2\Delta t} \]
 	
-	\section{Анализ модели}
+	\section{Реализация модели}
 		Программы были написаны на языке Java с использованием Python-библиотеки matplotlib для построение графиков.
+						Код программы:
+		\begin{lstlisting}[language=Java]
+			public class Main {
+				private static final Double g = 9.8;
+				
+				private final static Double horsePowerDelimeter = 735.499;
+				
+				private static Double toHorsePower(Double power) {
+					return power/horsePowerDelimeter;
+				}
+				
+				private static Double toMeterForSecond(Double v) {
+					return v * 1000/3600;
+				}
+				
+				public static Double powerInHorsePowersAlpha(Double m, Double v, Double alpha) {
+					return toHorsePower(m*g*toMeterForSecond(v)*Math.sin(Math.toRadians(alpha)));
+				}
+				
+				public static void main(String[] args) throws PythonExecutionException, IOException {
+					ArrayList<Double> vs = new ArrayList<>();
+					ArrayList<Double> ps1 = new ArrayList<>();
+					ArrayList<Double> ps2 = new ArrayList<>();
+					for(double v = 20.; v <= 60; ++v) {
+						vs.add(v);
+						ps1.add(powerInHorsePowersAlpha(1250., v, 15.));
+						ps2.add(powerInHorsePowersAlpha(2250., v, 15.));
+					}
+					Plot plt = Plot.create();
+					plt.plot().add(vs, ps1).linewidth(2.);
+					plt.plot().add(vs, ps2).linewidth(2.);
+					plt.xlabel("V");
+					plt.ylabel("P");
+					plt.legend();
+					plt.show();
+				}
+			}
+		\end{lstlisting}
+		\pagebreak
 		\subsection{Движение под углом}
 			\begin{enumerate}
 				\item Зависимость мощности от скорости движения под углом \( 15^\circ \)
-				
-				Код программы:
-				\begin{lstlisting}[language=Java]
-public class Main {
-	private static final Double g = 9.8;
-	
-	private final static Double horsePowerDelimeter = 735.499;
-	
-	private static Double toHorsePower(Double power) {
-		return power/horsePowerDelimeter;
-	}
-	
-	private static Double toMeterForSecond(Double v) {
-		return v * 1000/3600;
-	}
-	
-	public static Double powerInHorsePowersAlpha(Double m, Double v, Double alpha) {
-		return toHorsePower(m*g*toMeterForSecond(v)*Math.sin(Math.toRadians(alpha)));
-	}
-	
-	public static void main(String[] args) throws PythonExecutionException, IOException {
-		ArrayList<Double> vs = new ArrayList<>();
-		ArrayList<Double> ps1 = new ArrayList<>();
-		ArrayList<Double> ps2 = new ArrayList<>();
-		for(double v = 20.; v <= 60; ++v) {
-			vs.add(v);
-			ps1.add(powerInHorsePowersAlpha(1250., v, 15.));
-			ps2.add(powerInHorsePowersAlpha(2250., v, 15.));
-		}
-		Plot plt = Plot.create();
-		plt.plot().add(vs, ps1).linewidth(2.);
-		plt.plot().add(vs, ps2).linewidth(2.);
-		plt.xlabel("V");
-		plt.ylabel("P");
-		plt.legend();
-		plt.show();
-	}
-}
-				\end{lstlisting}
 				\begin{figure}[H]
 					\centering
 					\includegraphics[width = \linewidth]{fig1.pdf}
 					\caption[.] {График зависимости P от \( \upsilon \)}
 				\end{figure}
-				При \( \alpha = 15^\circ \) для того, чтобы двигаться 
-				cо скоростью \( \upsilon = 20 \text{км}/\text{ч} \) легковой машине необходима P = 24 л.с.,
-				внедорожнику P = 44 л.с. 
 				\pagebreak
-				\item Зависимость мощности от массы при скорости \( \upsilon = 20 \text{км}/\text{ч} \)
-				
-					Т.к. масса легкового автомобиля в среднем варьируется от 1000кг до 1500кг, а внедорожника до 2500кг, то построим график зависимости мощности от массы автомобиля.
-					Код программы:
-					\begin{lstlisting}[language=Java]
-public class Main {
-	private static final Double g = 9.8;
-	
-	private final static Double horsePowerDelimeter = 735.499;
-	
-	private static Double toHorsePower(Double power) {
-		return power/horsePowerDelimeter;
-	}
-	
-	private static Double toMeterForSecond(Double v) {
-		return v * 1000/3600;
-	}
-	
-	public static Double powerInHorsePowersAlpha(Double m, Double v, Double alpha) {
-		return toHorsePower(m*g*toMeterForSecond(v)*Math.sin(Math.toRadians(alpha)));
-	}
-	
-	public static void main(String[] args) throws PythonExecutionException, IOException {
-		ArrayList<Double> vs = new ArrayList<>();
-		ArrayList<Double> ps1 = new ArrayList<>();
-		
-		for(double m = 1000; m <= 2500; ++m) {
-			vs.add(m);
-			ps1.add(powerInHorsePowersAlpha(m, 40., 15.));
-		}
-		Plot plt3 = Plot.create();
-		plt3.plot().add(vs, ps1).linewidth(2.);
-		plt3.xlabel("m");
-		plt3.ylabel("P");
-		plt3.legend();
-		plt3.show();
-	}
-}
-					\end{lstlisting}
+				\item Зависимость мощности от массы автомобиля
 					\begin{figure}[H]
 						\centering
 						\includegraphics[width = \linewidth]{fig2.pdf}
-						\caption[.] {График зависимости P от m при \( \upsilon = 40 \text{км}/\text{ч} \)}
+						\caption[.] {График зависимости P от m}
 					\end{figure}
+				\item Зависимость мощности от угла движения автомобиля
+				\begin{figure}[H]
+					\centering
+					\includegraphics[width = \linewidth]{fig4.pdf}
+					\caption[.] {График зависимости P от alpha}
+				\end{figure}
 			\end{enumerate}
 		\pagebreak
 		\subsection{Движение по прямой}

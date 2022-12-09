@@ -16,7 +16,13 @@
 		Проанализировать полученную модуль.
 
 	\section{Создание математической модели}
-		Рассматривается закрытый ареал, в котором обитают два вида: травоядные("жертва") и хищники. Предполагается, что животные не иммигрируют и не эмигрируют, и
+		Рассматривается закрытый ареал, в котором обитают два вида: травоядные("жертва") и хищники. 
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth] {1.jpg}
+			\caption[.] {Хищник и жертва}
+		\end{figure}
+		Предполагается, что животные не иммигрируют и не эмигрируют, и
 		что еды для травоядных имеется с избытком. Тогда уравнение изменения количества жертв принимает вид:
 			\[ \dfrac{dx}{dt} = \alpha x,\]
 		где $\alpha$ - коэффициент рождаемости жертв, $x$ - величина популяции жертв, $\dfrac{dx}{dt}$ - скорость прироста популяции жертв
@@ -29,11 +35,33 @@
 		С учетом этого, система уравнений модели такова:
 		\[ \begin{cases}
 			\dfrac{dx}{dt} = \alpha x - \beta xy = (\alpha - \beta y)x, \\
-			\dfrac{dy}{dt} = - \gamma y + \delta xy = (\beta x - \gamma)y. \\
+			\dfrac{dy}{dt} = - \gamma y + \delta xy = (\delta x - \gamma)y. \\
 		    \end{cases}
 		 \]
-	
+		 
 	\section{Анализ модели}
+		Найдём особые точки системы:
+		\[ \begin{cases}
+			(\alpha - \beta y)x = 0, \\
+			(\delta x - \gamma)y = 0; \\
+		\end{cases}
+		\]
+		
+		\[ \begin{cases}
+			\alpha x = \beta xy, \\
+			\delta xy = \gamma; \\
+		\end{cases}
+		\]
+		
+		\[ \begin{cases}
+			y(0) = \dfrac{\alpha}{\beta}, \\
+			x(0) = \dfrac{\gamma}{\delta}; \\
+		\end{cases}
+		\]
+	
+	\pagebreak
+	\section{Реализация модели}
+		Модель была реализована в MathCad.
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width = \linewidth]{1.pdf}
