@@ -1,8 +1,7 @@
 \babel@toc {russian}{}\relax 
 \contentsline {section}{\numberline {1}Определение цели}{3}{}%
-\contentsline {section}{\numberline {2}Информация об объекте}{3}{}%
-\contentsline {section}{\numberline {3}Создание математической модели}{4}{}%
-\contentsline {section}{\numberline {4}Реализация модели}{5}{}%
-\contentsline {subsection}{\numberline {4.1}Утюг без терморегулятора}{5}{}%
-\contentsline {subsection}{\numberline {4.2}Утюг с терморегулятором}{8}{}%
-\contentsline {section}{\numberline {5}Вывод}{14}{}%
+\contentsline {section}{\numberline {2}Создание математической модели}{4}{}%
+\contentsline {section}{\numberline {3}Реализация модели}{6}{}%
+\contentsline {subsection}{\numberline {3.1}Утюг без терморегулятора}{6}{}%
+\contentsline {subsection}{\numberline {3.2}Утюг с терморегулятором}{8}{}%
+\contentsline {section}{\numberline {4}Вывод}{14}{}%
