@@ -12,10 +12,11 @@
 	\pagebreak	
 
 	\section{Определение цели}
+		В данной лабораторной работе необходимо создать модель математического маятника. Маятник — система, подвешенная в поле тяжести и совершающая механические колебания. Одним из простейших маятников является шарик, подвешенный на нити. Маятники используются в различных приборах, например, в часах и сейсмографах.
 		
 	\section{Создание математической модели}
 		Математический маятник -- система, состоящая из материальной точки, подвешенной на конце нерастяжимой
-		нити. Другой конец нити неподвижен.
+		нити или на невесомом стержне в поле тяжести. Другой конец нити неподвижен.
 		\begin{figure}[H]
 			\centering
 			\includegraphics[]{fig1.png}
@@ -38,10 +39,14 @@
 		При наличии затуханий
 		\[ \ddot{\theta} + k \dot{\theta} + \omega_0^2\sin{\theta} = 0, \]
 		где k - коэффициент затухания
+		
+		Добавим внешнюю периодическую силу $a \cdot \sin{(\omega t)}$ и колебания станут вынужденными:
+		\[ \ddot{\theta} + k \dot{\theta} + \omega_0^2\sin{\theta} = a \cdot \sin{(\omega t)}, \]
 	
 	\pagebreak
 	\section{Реализация модели}
-		Модель была реализована в MathCad.		
+		Модель была реализована в MathCad.
+		\subsection{Сравнение линейных и нелинейных незатухающих колебаний}		
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width = \linewidth]{1.jpg}
@@ -78,6 +83,7 @@
 			\centering
 			\includegraphics[width = \linewidth]{9.jpg}
 		\end{figure}
+	\subsection{Затухающие колебания}	
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width = \linewidth]{10.jpg}
@@ -102,8 +108,23 @@
 			\centering
 			\includegraphics[width = \linewidth]{15.jpg}
 		\end{figure}
+	\subsection{Вынужденные колебания}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{16.jpg}
+		\end{figure}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{17.jpg}
+		\end{figure}
+		\subsection{Резонанс}
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{18.jpg}
+		\end{figure}
+		При $\omega_0 = \omega$ возникает резонанс.
 		
 	\section{Вывод}
-		
+		Таким образом, были составлены математические модели линейных и нелинейных незатухающих, затухающих и вынужденных колебаний. 
 		
 \end{document}	
