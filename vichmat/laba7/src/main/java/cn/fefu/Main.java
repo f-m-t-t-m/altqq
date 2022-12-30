@@ -113,12 +113,13 @@ public class Main {
                 f.add(funcDerivative(j, 0));
             }
         }
-        Plot plt = Plot.create();
-        plt.plot().add(xs, S).label("Кубический сплайн").linewidth(1.);
-        plt.plot().add(xs, f).label("График функции").linewidth(1.);
-        plt.legend();
-        plt.show();
-        plt.savefig("fig1.svg");
-        plt.executeSilently();
+        System.out.println(S.get(20) - f.get(20));
+//        Plot plt = Plot.create();
+//        plt.plot().add(xs, S).label("Кубический сплайн").linewidth(1.);
+//        plt.plot().add(xs, f).label("График функции").linewidth(1.);
+//        plt.legend();
+//        plt.show();
+//        plt.savefig("fig1.svg");
+//        plt.executeSilently();
     }
 }
