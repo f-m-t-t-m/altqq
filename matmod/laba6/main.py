@@ -1,3 +1,4 @@
+import math
 import random
 import numpy as np
 from math import *
@@ -15,8 +16,7 @@ def v(x, y):
 
 
 def c(y):
-    return -1 if y < 0.5 else 1
-
+    return atan((y-0.5)/0.1)
 
 xs = []
 ys = []
@@ -24,11 +24,10 @@ cs = []
 
 random.seed(1)
 
-for i in range(0, 1000):
+for i in range(0, 20000):
     xs.append(random.random())
     ys.append(random.random())
     cs.append(c(ys[-1]))
-
 
 def ode(y, t):
     x_, y_ = y
@@ -36,7 +35,7 @@ def ode(y, t):
     return dydt
 
 
-t = np.linspace(0, 10, 100)
+t = np.linspace(0, 0.3, 10)
 y0 = list(zip(xs, ys))
 res = []
 
@@ -45,23 +44,23 @@ for ic in y0:
 
 xs_ = []
 ys_ = []
-for i in range(0, 1000):
-    xs_.append(res[i][1][0])
-    ys_.append(res[i][1][1])
+for i in range(0, 20000):
+    xs_.append(res[i][9][0])
+    ys_.append(res[i][9][1])
 
-xx = np.linspace(np.min(xs_), np.max(xs_))
-yy = np.linspace(np.min(ys_), np.max(ys_))
+xx = np.linspace(np.min(xs_), np.max(xs_), 1000)
+yy = np.linspace(np.min(ys_), np.max(ys_), 1000)
 xx, yy = np.meshgrid(xx, yy)
+
 cs = np.asarray(cs)
-print(cs)
 xs_ = np.asarray(xs_)
 ys_ = np.asarray(ys_)
 
 vals = interpolate.griddata((xs_, ys_), cs, (xx, yy),
-                            method="linear")
+                           method="linear")
 
-plt.contourf(xx, yy, vals)
+plt.figure()
+plt.pcolormesh(xx, yy, vals)
 plt.tight_layout()
 plt.colorbar()
-plt.show()
-plt.savefig("6.svg")
+plt.savefig("10.png")
