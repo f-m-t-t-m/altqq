@@ -1,5 +1,5 @@
 \babel@toc {russian}{}\relax 
-\contentsline {section}{\numberline {1}Определение цели}{3}{}%
+\contentsline {section}{\numberline {1}Введение}{3}{}%
 \contentsline {section}{\numberline {2}Создание математической модели}{4}{}%
 \contentsline {subsection}{\numberline {2.1}Модель при движении по наклонной дороге}{4}{}%
 \contentsline {subsection}{\numberline {2.2}Модель при движении по прямой дороге}{5}{}%

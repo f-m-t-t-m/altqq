@@ -18,13 +18,16 @@ def v(x, y):
 def c(y):
     return atan((y-0.5)/0.1)
 
+# def c(y):
+#     return -1 if y < .5 else 1
+
 xs = []
 ys = []
 cs = []
 
 random.seed(1)
 
-for i in range(0, 20000):
+for i in range(0, 10000):
     xs.append(random.random())
     ys.append(random.random())
     cs.append(c(ys[-1]))
@@ -35,7 +38,7 @@ def ode(y, t):
     return dydt
 
 
-t = np.linspace(0, 0.3, 10)
+t = np.linspace(0, 1, 100)
 y0 = list(zip(xs, ys))
 res = []
 
@@ -44,9 +47,9 @@ for ic in y0:
 
 xs_ = []
 ys_ = []
-for i in range(0, 20000):
-    xs_.append(res[i][9][0])
-    ys_.append(res[i][9][1])
+for i in range(0, 10000):
+    xs_.append(res[i][99][0])
+    ys_.append(res[i][99][1])
 
 xx = np.linspace(np.min(xs_), np.max(xs_), 1000)
 yy = np.linspace(np.min(ys_), np.max(ys_), 1000)
