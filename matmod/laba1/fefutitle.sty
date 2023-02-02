@@ -17,7 +17,7 @@
 \newdateformat{monthdate}{\monthname[\THEMONTH]}
 \newdateformat{yeardate}{\THEYEAR}
 
-\newcommand{\fefutitle}[1] {
+\newcommand{\fefutitle}[2] {
 	\begin{titlepage}
 		\thispagestyle{empty}
 		\parindent=0pt
@@ -54,13 +54,13 @@
 			
 			\vspace{30pt}
 	
-			\textbf{ОТЧЕТ}
+			\textbf{Лабораторная работа №{#1}}
+			
+			\textbf{<<{#2}>>}
 	
 			\vspace{12pt}
 	
-			к лабораторной работе №{#1} по дисциплине
-			
-			<<Математическое моделирование>>
+			по дисциплине <<Математическое моделирование>>
 	
 			\vspace{12pt}
 	
@@ -84,7 +84,13 @@
 			\(\underset{\textit{(подпись)}}{\text{\uline{\hspace{50pt} }}}\)
 			\newline
 			
-			<<\uline{ \daydate{\today} }>> \uline{\monthdate{\today}} 20\uline{22} г.
+			Проверил профессор
+			
+			\(\underset{\textit{(ФИО)}}{\text{\uline{Пермяков М.С.}}}\)
+			\(\underset{\textit{(подпись)}}{\text{\uline{\hspace{50pt} }}}\)
+			\newline
+			
+			<<\uline{ \daydate{\today} }>> \uline{\monthdate{\today}} 20\uline{23} г.
 		
 		\end{multicols}
 	

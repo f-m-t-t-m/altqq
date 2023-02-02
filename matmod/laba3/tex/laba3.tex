@@ -8,7 +8,7 @@
 \usepackage{float}
 
 \begin{document}
-	\fefutitle{3}
+	\fefutitle{3}{Модель Лотки-Вольтерра}
 	\pagebreak	
 
 	\section{Введение}
@@ -66,6 +66,11 @@
 	\section{Реализация модели}
 		Модель была реализована в MathCad. Система дифференциальных уравнений решалась с помощью функции rkfixed.
 		Она решает систему ОДУ методом Рунге-Кутта четвертого порядка и принамает в качестве параметров вектор начальных условий, границы интервала, на котором ищется решение, число точек внутри интервала и вектор содержащий производные.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = \linewidth]{2.jpg}
+			\caption[.] {Код программы}
+		\end{figure}
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width = \linewidth]{1.pdf}
