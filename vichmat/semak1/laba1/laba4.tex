@@ -1,0 +1,172 @@
+\documentclass[a4paper, 14pt, fleqn]{extarticle}
+\usepackage{enumitem}
+\usepackage{fefutitle}
+
+
+\begin{document}
+	\fefutitle{1}
+	\pagebreak	
+	\parskip = 5pt
+
+	\section{Задание 1}
+		\subsection{Постановка задачи}
+			\noindent Число \( X = 0.068147 \), все цифры которого верны в строгом смысле,
+					округлите до трех значащих цифр. Для полученного числа \( X_1 \approx X \) найдите
+					предельную абсолютную и предельную относительную погрешности. В
+					записи числа \( X_1 \) укажите количество верных цифр (в узком и широком
+					смысле).
+	
+		\subsection{Решение}
+
+			\indent Пусть \( X = 0.068147 \)
+			
+			Округлим данное число до трёх значащих цифр, получим число: \\ \indent \( X_1 = 0.0681 \)
+
+			Вычислим абсолютную погрешность:\\ \indent \( \Delta X_1 = |X-X_1| = |0.068147 - 0.0681| = 0.000047 \) 
+
+			Определим границы абсолютной погрешности (предельную погрешность), округляя с избытком до одной значащей цифры: \\ \indent \( \Delta_{X_1}  = 0.00005\) 
+
+			Предельная относительная погрешность составляет:  \\ \indent \( \delta_{X_1} = \dfrac{\Delta_{X_1}}{|X_1|} = \dfrac{0.00005}{0.0681} = 0.0007 = 0.07\% \)
+
+			Укажем количество верных цифр в узком и широком смысле в записи числа \( X_1 = 0.0681 \).
+
+			Так как \( \Delta_{X_1} = 0.00005 \leq 0.00005 \), следовательно, в узком смысле верными являются все цифры числа \(X_1\)
+
+			Так как \( \Delta_{X_1} = 0.00005 \leq 0.0001 \), следовательно, в узком смысле верными являются все цифры числа \(X_1\)
+
+	\pagebreak
+
+	\section{Задание 2}
+		\subsection{Постановка задачи}
+			\noindent Вычислите с помощью микрокалькулятора значение величины \( Z = \frac{(b-c)^2}{2a+b} \) при заданных значениях параметров \(a = 12.762\), \(b = 0.453413\) и \(с = 0,290\), 
+					используя «ручные» расчетные таблицы для пошаговой регистрации результатов вычислений, тремя способами:
+					\begin{enumerate}
+						\item по правилам подсчета цифр;
+						\item по методу строгого учета границ абсолютных погрешностей;
+						\item по способу границ.
+					\end{enumerate}
+					Сравните полученные результаты между собой, прокомментируйте различие методов вычислений и смысл
+					полученных числовых значений.
+
+		\subsection{Решение}
+			\begin{enumerate}
+				\item \textbf{<<Правила подсчёта цифр>>}
+					\begin{center}
+						\begin{tabular}{ |c|c|c|c|c|c|c|c| }
+							\hline
+							 \( a \) & \( b \) &  \( c \) &  \( b - c \) & \( (b-c)^2 \) & \( 2a \) & \( 2a  +  b \) &  \( \dfrac{ (b-c)^2 }{ 2a + b} \) \\
+							\hline
+							\( 1.105 \) & \( 6.453 \) & \( 3.54 \) & \( 2.91\mathbf{3} \) & \( 8.4\mathbf{9} \) & \( 2.21\mathbf{0} \) & \( 8.66\mathbf{3} \) & \( 0.98\mathbf{0} \) \\
+							\hline
+						\end{tabular}
+					\end{center}
+			
+					\begin{enumerate}[label*=\arabic*.]
+						\item \( b - c = 6.453 - 3.54 = 2.913 \approx 2.91\mathbf{3} \)
+						\item \( (b - c)^2 = 2.91\mathbf{3}^2 = 8.485569 \approx 8.4\mathbf{9} \)
+						\item \( 2a = 2 \cdot 1.105 = 2.21 \approx 2.21\mathbf{0} \) 
+						\item \( 2a + b  = 2.21\mathbf{0} + 6.453 = 8.663 \approx 8.66\mathbf{3} \)
+						\item \( \dfrac{(b-c)^2}{2a+b} = \dfrac{8.4\mathbf{9}}{8.66\mathbf{3}} = 0.98003001269 \approx 0.98\mathbf{0} \)  
+					\end{enumerate}
+				\pagebreak
+				\item \textbf{<<Метод строгого учета границ абсолютных погрешностей>>}
+					\begin{center}
+						\begin{tabular}{| c | c | c | c |}
+							\hline
+							\( a \) & \( 1.105 \) &\( \Delta a \) & \( 0.0005 \) \\
+							\hline
+							\( b \) & \( 6.453 \) & \( \Delta b \) & \( 0.0005 \) \\
+							\hline
+							\( c \) & \( 3.54 \) & \( \Delta c \) & \( 0.005 \) \\
+							\hline
+							\( b - c \) & \( 2.9\mathbf{1} \) & \( \Delta (b - c) \) & \( 0.0055 \) \\
+							\hline
+							\( (b - c)^2 \) & \( 8.4\mathbf{7} \) & \( \Delta (b - c)^2 \)  & \( 0.032 \) \\
+							\hline
+							\( 2a \) & \( 2.21\mathbf{0} \) & \( \Delta (2a) \) & \( 0.001 \) \\
+							\hline
+							\( 2a + b\) & \( 8.66\mathbf{3} \) & \( \Delta (2a + b) \) & \( 0.0015 \) \\
+							\hline
+							\( Z \) & \( 0.97\mathbf{8} \) & \( \Delta Z \) & \( 0.0039 \) \\
+							\hline
+						\end{tabular}
+					\end{center}
+					\begin{enumerate}[label*=\arabic*.]
+						\item \( b - c = 6.453 - 3.54 = 2.913 \approx 2.9\mathbf{1} \)
+
+							\( \Delta(b-c) = \Delta b + \Delta c = 0.0055 \)
+
+						\item \( (b - c)^2 = 2.9\mathbf{1}^2 = 8.4681 \approx 8.4\mathbf{7} \)
+
+							\( \Delta (b - c)^2 = |2(b - c)| \cdot \Delta (b - c) = 5.82 \cdot 0.0055 = 0.03201 \approx 0.032 \)
+
+						\item \( 2a = 2 \cdot 1.105 = 2.21 \approx 2.21\mathbf{0} \) 
+
+							\( \Delta(2a)  = |(2a)'| \cdot \Delta a = 2 \cdot 0.0005 = 0.001  \)
+
+						\item \( 2a + b  = 2.21\mathbf{0} + 6.453 = 8.663 \approx 8.66\mathbf{3} \)
+							
+							\( \Delta (2a + b) = \Delta (2a) + \Delta (b) = 0.001 + 0.0005 = 0.0015 \)
+
+						\item \( \dfrac{(b-c)^2}{2a+b} = \dfrac{8.4\mathbf{7}}{8.66\mathbf{3}} = 0.97772134364 \approx 0.97\mathbf{8} \) 
+
+							\(\begin{aligned}[t] \Delta \biggl(\dfrac{(b - c)^2}{2a + b}\biggl) &= \dfrac{(b-c)^2 \cdot \Delta(2a+b) + (2a+b) \cdot \Delta(b-c)^2}{(2a+b)^2}=\\&= 0.00386431744 \approx 0.0039 \end{aligned}\)
+					\end{enumerate}
+					\( Z = 0.98 \pm 0.01 \)
+				\pagebreak
+				\item \textbf{<<Способ границ>>}
+					\begin{center}
+						\begin{tabular}{| c | c | c |}
+							\hline
+							\hphantom{2a + b} & НГ  &  ВГ  \\
+							\hline
+							\( a \) & \( 1.1045 \) & \( 1.1055 \) \\
+							\hline 
+							\( b \) & \( 6.4525 \) & \( 6.4535 \) \\
+							\hline
+							\( c \) & \( 3.535 \) & \( 3.545 \) \\
+							\hline
+							\( b - c \) & \( 2.907\mathbf{5} \) & \( 2.918\mathbf{5} \) \\
+							\hline
+							\( (b - c )^2\) & \( 8.45\mathbf{3} \) & \( 8.51\mathbf{8} \) \\
+							\hline
+							\( 2a \) & \( 2.209\mathbf{0} \) & \( 2.211\mathbf{0}\) \\
+							\hline
+							\( 2a + b \) & \( 8.661\mathbf{5} \) & \( 8.664\mathbf{5} \) \\
+							\hline
+							\( Z \) & \( 0.975\mathbf{5} \) & \( 0.983\mathbf{4} \) \\
+							\hline
+						\end{tabular}
+					\end{center}
+				\begin{enumerate}[label*=\arabic*.]
+					\item \( \textrm{НГ}_{b-c} = \textrm{НГ}_{b} - \textrm{ВГ}_{c} = 6.4525 - 3.545 = 2.9075 \approx 2.907\mathbf{5} \)
+
+						 \( \textrm{ВГ}_{b-c} = \textrm{ВГ}_{b} - \textrm{НГ}_{c} = 6.4535 - 3.535 = 2.9185 \approx 2.918\mathbf{5} \)
+
+					\item \( \textrm{НГ}_{(b-c)^2} = (\textrm{НГ}_{(b-c)})^2  = 2.907\mathbf{5}^2 = 8.45355625 \approx 8.45\mathbf{3} \)
+
+						 \( \textrm{ВГ}_{(b-c)^2} = (\textrm{ВГ}_{(b-c)})^2  = 2.918\mathbf{5}^2 = 8.51764225 \approx 8.51\mathbf{8} \)
+
+					\item \( \textrm{НГ}_{2a} = (2\textrm{НГ}_{a})  = 2 \cdot 1.1045 = 2.209 \approx 2.209\mathbf{0} \)
+
+						\( \textrm{ВГ}_{2a} = (2\textrm{ВГ}_{a})  = 2 \cdot 1.1055 = 2.211 \approx 2.209\mathbf{0} \)
+
+					\item \( \textrm{НГ}_{2a+b} = \textrm{НГ}_{2a} + \textrm{НГ}_{b} = 2.209\mathbf{0} + 6.4525 = 8.6615 \approx 8.661\mathbf{5} \)
+
+						 \( \textrm{ВГ}_{2a+b} = \textrm{ВГ}_{2a} + \textrm{ВГ}_{b} = 2.211\mathbf{0} + 6.4535 = 8.6645 \approx 8.664\mathbf{5} \)
+
+					\item \( \textrm{НГ}_{Z} = \dfrac{\textrm{НГ}_{(b-c)^2}}{\textrm{ВГ}_{(2a+b)}} = \dfrac{8.45\mathbf{3}}{8.664\mathbf{5}} = 0.97559005135 \approx 0.975\mathbf{5} \)
+
+						\( \textrm{ВГ}_{Z} = \dfrac{\textrm{ВГ}_{(b-c)^2}}{\textrm{НГ}_{(2a+b)}} = \dfrac{8.51\mathbf{8}}{8.661\mathbf{5}} = 0.983433243987 \approx 0.983\mathbf{4} \)
+			\end{enumerate}
+				
+			\( 0.975 < Z < 0.984\)
+		\end{enumerate}
+		Вычисляя значения величины \( Z \) тремя разными способами, получили следующие результаты: 
+		\begin{enumerate}
+			\item \( Z \approx 0.98 \)
+			\item \( Z = 0.98 \pm 0.01 \)
+			\item \( 0.975 < Z < 0.984 \)
+		\end{enumerate}
+	
+\end{document}	

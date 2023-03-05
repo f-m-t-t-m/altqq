@@ -1,5 +1,4 @@
-import math
-import random
+
 import numpy as np
 from math import *
 import matplotlib.pyplot as plt
@@ -7,8 +6,8 @@ from scipy.integrate import odeint, RK45
 from scipy import interpolate
 
 x, y = np.meshgrid(
-    np.linspace(0, 1, 20),
-    np.linspace(0, 1, 20)
+    np.linspace(0, 1, 15),
+    np.linspace(0, 1, 15)
 )
 
 u = -np.pi * np.sin(2 * np.pi * x) * np.cos(np.pi * y)
@@ -18,8 +17,8 @@ v = 2 * np.pi * np.cos(2 * np.pi * x) * np.sin(np.pi * y)
 
 
 plt.figure()
-# plt.quiver(x, y, u, v, color='b')
-plt.streamplot(x,y,u,v, density=1.4, linewidth=None, color='#A23BEC')
+plt.quiver(x, y, u, v, color='red')
+#plt.streamplot(x,y,u,v, density=1.4, linewidth=None, color='#A23BEC')
 plt.tight_layout()
 plt.grid()
 plt.savefig("11.png")

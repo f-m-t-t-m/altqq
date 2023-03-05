@@ -35,12 +35,6 @@
 	\section{Введение}
 		В данной лабораторной необходимо создать модель нагревательного прибора. В качестве прибора возьмём электрический утюг, так как это элемент бытовой техники, который есть практически у всех. Утюг был изобретен давно. Например, до появления электричества существовали угольные утюги.	
 		
-		\begin{figure}[H]
-			\centering
-			\includegraphics[width = .5\linewidth]{utug0.jpg}
-			\caption[.] {Угольный утюг}
-		\end{figure}
-		
  		Но с появлением электричества и развития техники, появились электрические утюги. Работа электрического утюга с электрическим нагревом основана на выделении тепловой энергии при прохождении электрического тока через нагревательный элемент. Температура нагревательного элемента сообщается подошве утюга, которая также нагревается. Ранние электрические утюги не имели регулировки температуры и их было необходимо отключать от сети при достижении небходимой температуры. Температура современных электрических утюгов задается отдельным терморегулятором, главная функция которого заключается в своевременном отключении подачи электроэнергии в соответствии с заданным режимом.
 		
 		\begin{figure}[H]
@@ -143,18 +137,12 @@ public class Main {
 		}
 		
 		ArrayList<Double> T = euler(new Func(), t);
-		
-		Plot plt = Plot.create();
-		plt.plot().add(t, T);
-		plt.xlabel("t");
-		plt.ylabel("T");
-		plt.show();
 	}
 }
 			\end{lstlisting}
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width = \linewidth]{fig1.pdf}
+				\includegraphics[width = .75\linewidth]{fig1.pdf}
 				\caption[.] {График решения дифференциального уравнения \eqref{eq:1} при разных данных}
 			\end{figure}
 		\pagebreak
@@ -207,48 +195,40 @@ public class Main {
 		}
 		
 		ArrayList<Double> T = euler(new Func(), t);
-		
-		Plot plt = Plot.create();
-		plt.plot().add(t, T);
-		plt.xlabel("t");
-		plt.ylabel("T");
-		plt.savefig("fig10.svg");
-		plt.show();
 	}
-				}
+}
 			\end{lstlisting}
-			\pagebreak
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width = \linewidth]{fig2.pdf}
+				\includegraphics[width = .65\linewidth]{fig2.pdf}
 				\caption[.] {График решения дифференциального уравнения \eqref{eq:2} 
 				при $P = 500$ Вт, $m = 0.8$ кг, $c = 530$ Дж/К, $S = 0.02 \text{м}^2$}
 			\end{figure}
 			
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width = \linewidth]{fig3.pdf}
+				\includegraphics[width = .65\linewidth]{fig3.pdf}
 				\caption[.] {График решения дифференциального уравнения \eqref{eq:2} 
 					при $P = 500$ Вт, $m = 0.8$ кг, $c = 900$ Дж/К, $S = 0.02 \text{м}^2$ }
 			\end{figure}
 			
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width = \linewidth]{fig4.pdf}
+				\includegraphics[width = .65\linewidth]{fig4.pdf}
 				\caption[.] {График решения дифференциального уравнения \eqref{eq:2} 
 					при $P = 500$ Вт, $m = 0.8$ кг, $c = 530$ Дж/К, $S = 0.01 \text{м}^2$}
 			\end{figure}
 			
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width = \linewidth]{fig5.pdf}
+				\includegraphics[width = .65\linewidth]{fig5.pdf}
 				\caption[.] {График решения дифференциального уравнения \eqref{eq:2} 
 					при $P = 500$ Вт, $m = 1$ кг, $c = 530$ Дж/К, $S = 0.02 \text{м}^2$}
 			\end{figure}
 			
 			\begin{figure}[H]
 				\centering
-				\includegraphics[width = \linewidth]{fig6.pdf}
+				\includegraphics[width = .65\linewidth]{fig6.pdf}
 				\caption[.] {График решения дифференциального уравнения \eqref{eq:2} 
 					при $P = 700$ Вт, $m = 0.8$ кг, $c = 530$ Дж/К, $S = 0.02 \text{м}^2$}
 			\end{figure}
