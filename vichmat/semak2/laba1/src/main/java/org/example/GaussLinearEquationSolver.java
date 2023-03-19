@@ -2,6 +2,8 @@ package org.example;
 
 import java.util.Arrays;
 
+import static org.example.MatrixUtils.*;
+
 public class GaussLinearEquationSolver {
 
     public double[] solve(double[][] a, double[] b) {
@@ -9,7 +11,7 @@ public class GaussLinearEquationSolver {
         return backwardStep(a, b);
     }
 
-    private void forwardStep(double[][] a, double[] b) {
+    protected void forwardStep(double[][] a, double[] b) {
         int lastIndexA = a.length - 1;
         for(int i = 0; i < lastIndexA; ++i) {
             if (isMatrixTriangular(a)) {
@@ -24,32 +26,7 @@ public class GaussLinearEquationSolver {
         }
     }
 
-    private boolean isMatrixTriangular(double[][] a) {
-        for (int i = 0; i < a.length; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (a[i][j] != 0.0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private double[] copyAndMultiplyArray(double[] a, double multiplier) {
-        double[] aCopy = Arrays.copyOf(a, a.length);
-        for(int i = 0; i < aCopy.length; ++i) {
-            aCopy[i] *= multiplier;
-        }
-        return aCopy;
-    }
-
-    private void subtractLine(double[] a, double[] b) {
-        for(int i = 0; i < a.length; ++i) {
-            a[i] -= b[i];
-        }
-    }
-
-    private double[] backwardStep(double[][] a, double[] b) {
+    protected double[] backwardStep(double[][] a, double[] b) {
         double[] ans = Arrays.copyOf(b, b.length);
         int lastIndexA = a.length - 1;
         for(int i = lastIndexA; i >= 0; --i) {
