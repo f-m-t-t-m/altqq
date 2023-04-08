@@ -1,58 +1,36 @@
+# библиотека для удобной работы с матрицами
 import numpy as np
+
+# библиотека для удобной работы с матрицами
 import matplotlib.pyplot as plt
+def f(a, b1, x):
+    return (1 / 2 * x.transpose() @ a @ x + b1.transpose() @ x)[0][0]
 
+A = np.loadtxt("matrix_a.txt", usecols=range(6))
 
-def generate_pd_matrix(n: int, m: int) -> np.ndarray:
-    matrix = np.random.uniform(0.5, 1, (n, m))
-    return np.matmul(matrix, matrix.transpose())
+b = np.loadtxt("vector_b.txt", usecols=range(1), ndmin=2)
 
+x_0 = b
 
-def f(x: np.ndarray, a: np.ndarray, b: np.ndarray) -> np.ndarray:
-    return .5 * x.transpose() @ a @ x + b.transpose() @ x
+l = 10 ** -4  # λ
+accuracy = 10 ** -5  # ξ - точность условия выхода из цикла
+x_exact = np.linalg.solve(1 / 2 * (A.transpose() + A), -b)  # вычисление точного значения x через первую производную
+print(x_exact)
 
+x_previous = x_0.copy()
+x_current = x_previous - l * (1 / 2 * (A.transpose() + A) @ x_previous + b)
+step = 1
+f_per_step = np.array([f(A, b, x_current)])  # массив для построения графика
+# реализация метода градиента:
+while np.sqrt(np.sum((x_previous - x_current) ** 2)) > accuracy:
+    step += 1
+    x_previous = x_current.copy()
+    x_current = x_previous - l * (1 / 2 * (A.transpose() + A) @ x_previous + b)
+    f_per_step = np.append(f_per_step, f(A, b, x_current))  # сохранение результатов каждого шага для построения графика
 
-def f_derivative(a: np.ndarray, b: np.ndarray, x: np.ndarray) -> np.ndarray:
-    return .5 * np.matmul(np.add(a.transpose(), a), x) + b
+print(x_current)
 
-
-def gradient_descent(a: np.ndarray, b: np.ndarray, initial_x: np.ndarray, h=10e-4, precision=10e-5):
-    counter = 0
-    res_tuples = []
-    error = float('inf')
-    prev = None
-    current = initial_x
-    while error >= precision:
-        prev = current
-        current = np.subtract(prev, h * f_derivative(a, b, prev))
-        error = np.linalg.norm(np.subtract(current, prev), 'fro')
-        counter += 1
-        res_tuples.append((counter, current))
-    return res_tuples
-
-
-if __name__ == '__main__':
-    matrix_a = np.loadtxt("matrix_a.txt", usecols=range(6))
-    vector_b = np.loadtxt("vector_b.txt", usecols=range(1), ndmin=2)
-    x_sol = np.linalg.solve(.5 * np.add(matrix_a.transpose(), matrix_a), -vector_b)
-    vector_x0 = x_sol * -2
-
-    ans = gradient_descent(matrix_a, vector_b, vector_x0)
-    #print(len(ans))
-    #print(ans[int(len(ans)/4)][1])
-    #print(ans[int(len(ans)/2)][1])
-    #print(ans[3 * int(len(ans) / 4)][1])
-    #print(ans[len(ans) - 1][1])
-    # print(vector_x0)
-    # print(x_sol)
-
-    #print(f(ans[int(len(ans)/4)][1], matrix_a, vector_b))
-    #print(f(ans[int(len(ans) / 2)][1], matrix_a, vector_b))
-    #print(f(ans[3 * int(len(ans) / 4)][1], matrix_a, vector_b))
-    #print(f(ans[int(len(ans)) - 1][1], matrix_a, vector_b))
-    #
-    #print(f(x_sol, matrix_a, vector_b))
-    print(np.linalg.eigvals(matrix_a))
-
-    f_values = np.ravel([f(i[1], matrix_a, vector_b).flatten() for i in ans]).tolist()
-    plt.plot([i[0] for i in ans], f_values, 'black')
-    plt.savefig('fig1.png')
+plt.plot(range(0, step), f_per_step)
+plt.xlabel('номер шага')
+plt.ylabel('значение функции')
+plt.show()

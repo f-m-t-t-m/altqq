@@ -4,11 +4,6 @@ import static org.example.MatrixUtils.*;
 
 public class GaussLinearEquationWithMainElementSolver extends GaussLinearEquationSolver {
 
-    public double[] solve(double[][] a, double[] b) {
-        forwardStep(a, b);
-        return super.backwardStep(a, b);
-    }
-
     @Override
     protected void forwardStep(double[][] a, double[] b) {
         int lastIndexA = a.length - 1;
@@ -44,6 +39,4 @@ public class GaussLinearEquationWithMainElementSolver extends GaussLinearEquatio
         b[from] = tmpB;
     }
 
-    public GaussLinearEquationWithMainElementSolver() {
-    }
 }

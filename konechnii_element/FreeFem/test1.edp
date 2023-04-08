@@ -1,0 +1,25 @@
+//построение области
+real a, b, x0, y0;
+int m = 10;
+a = 3;
+b = 3;
+x0 = a/2.;
+y0 = b/2.;
+border g1(t=0,2*pi) {x = x0 + a*cos(t); y = y0 + b*sin(t);};
+border g2(t=0,1) {x = a/4 + a/2*t; y = 3*b/4;};
+border g3(t=2*pi,pi) {x = x0 + a/4*cos(t); y = 3*b/4 + a/4*sin(t);};
+plot(g1(m)+g2(m)+g3(m), wait=1);
+mesh Th = buildmesh(g1(m)+g2(m)+g3(m));
+plot(Th, wait=1);
+//cout << "Th = " << Th.nt << endl;
+//for (int i = 0; i <= Th.nt; ++i) {
+//	cout << i << endl; 
+//	for (int j = 0; j < 3; ++j) {
+//		cout << j << " " << Th[i][j].x << " " << Th[i][j].y << endl;
+//	}
+//}
+
+func f = pow(x,2) + x*y + 1;
+fespace Vh(Th, P1);
+Vh fe = f;
+plot(fe, fill=1, wait=1);

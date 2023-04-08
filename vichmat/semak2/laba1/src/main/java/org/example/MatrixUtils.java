@@ -39,6 +39,30 @@ public class MatrixUtils {
         System.out.println();
     }
 
+    public static double[][] multiply(double[][] a, double[][] b) {
+        int m = a.length;
+        int n = b[0].length;
+        double[][] res = new double[m][n];
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                for (int k = 0; k < m; ++k) {
+                    res[i][j] += a[i][k]*b[k][j];
+                }
+            }
+        }
+        return res;
+    }
+
+    public static double[][] transpose(double[][] a) {
+        double[][] res = new double[a[0].length][a.length];
+        for (int i = 0; i < a.length; ++i) {
+            for (int j = 0; j < a[0].length; ++j) {
+                res[j][i] = a[i][j];
+            }
+        }
+        return res;
+    }
+
     private MatrixUtils() {
     }
 
