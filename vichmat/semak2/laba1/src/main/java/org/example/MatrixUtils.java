@@ -63,6 +63,54 @@ public class MatrixUtils {
         return res;
     }
 
+    public static double norm(double[] vec) {
+        double sum = 0;
+        for (double v : vec) {
+            sum += Math.pow(v, 2);
+        }
+        return Math.sqrt(sum);
+    }
+
+    public static double[] plus(double[] v1, double[] v2) {
+        double[] res = new double[v1.length];
+        for (int i = 0 ; i < v1.length; ++i) {
+            res[i] = v1[i] + v2[i];
+        }
+        return res;
+    }
+
+    public static double[] minus(double[] v1, double[] v2) {
+        double[] res = new double[v1.length];
+        for (int i = 0 ; i < v1.length; ++i) {
+            res[i] = v1[i] - v2[i];
+        }
+        return res;
+    }
+
+    public static double[] divide(double[] vec, double divider) {
+        double[] res = vec.clone();
+        for (int i = 0; i < vec.length; ++i) {
+            res[i] /= divider;
+        }
+        return res;
+    }
+
+    public static double[] product(double[] vec, double val) {
+        double[] res = vec.clone();
+        for (int i = 0; i < vec.length; ++i) {
+            res[i] *= val;
+        }
+        return res;
+    }
+
+    public static double scalarProduct(double[] a, double[] b) {
+        double res = 0;
+        for (int i  = 0; i < a.length; ++i) {
+            res += a[i] * b[i];
+        }
+        return res;
+    }
+
     private MatrixUtils() {
     }
 

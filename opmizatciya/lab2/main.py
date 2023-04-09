@@ -58,7 +58,8 @@ if __name__ == '__main__':
     f_in_x_star = f(x_star)
     print(f"x* =\n{x_star}")
     print(f"function in x* = {f_in_x_star}")
-    print(f"||x*-x|| = {np.linalg.norm(x_star -  x_0)}")
+    print(f"x*-x_0 =\n{x_star - x_0}")
+    print(f"||x*-x_0|| = {np.linalg.norm(x_star -  x_0)}")
     print("------------------------------------------------------")
 
     for i in range(8):
