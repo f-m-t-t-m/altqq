@@ -19,7 +19,7 @@ plot(Th, wait=1);
 //	}
 //}
 
-func f = pow(x,2) + x*y + 1;
-fespace Vh(Th, P1);
-Vh fe = f;
-plot(fe, fill=1, wait=1);
+//func f = pow(x,2) + x*y + 1;
+//fespace Vh(Th, P1);
+//Vh fe = f;
+//plot(fe, fill=1, wait=1);

@@ -4,7 +4,7 @@ import numpy as np
 def generate_matrix():
     matrix = np.random.uniform(0.4, 0.7, (4, 4))
     np.savetxt("a.txt", matrix @ matrix, fmt='%.7f')
-    return matrix @ matrix
+    return matrix @ matrix.transpose()
 
 
 def generate_vector(name: str):
@@ -44,7 +44,9 @@ def newton(x_k: np.ndarray, epsilon=1e-6, max_iter=30):
 
 
 if __name__ == '__main__':
-    A = np.loadtxt("a.txt", usecols=(range(4)))
+    A = generate_matrix()
+    print(A)
+    #A = np.loadtxt("a.txt", usecols=(range(4)))
     b = np.loadtxt("b.txt", usecols=(range(1)), ndmin=2)
     x_0 = np.loadtxt("x_0.txt", usecols=(range(1)), ndmin=2)
     r = 5

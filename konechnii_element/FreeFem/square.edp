@@ -1,0 +1,95 @@
+real a = 1., b = 1.;
+int m = 10;
+
+border g1(t = 0, 1) {x = 0; y = b*t; label = 1;};
+border g2(t = 0, 1) {x = a*t; y = b; label = 1;};
+border g3(t = 0, 1) {x = a; y = b*(1 - t); label = 1;};
+border g4(t = 0, 1) {x = a*(1 - t); y = 0; label = 1;};
+
+mesh Th = buildmesh (g1(-m) + g2(-m) + g3(-m) + g4(-m));
+Th = adaptmesh(Th, hmin = 0.005, hmax = 0.015, nbvx = 1e6);
+//plot(Th, wait=1);
+
+func f = 3*sin(x) + pow(y - 0.2, 2);
+fespace Vh(Th, P1);
+Vh fe = f;
+plot(fe, fill=1, wait=1);
+
+func g = 3*sin(x) - 2;
+Vh u, v;
+solve poisson(u, v) = int2d(Th) ( dx(u)*dx(v) + dy(u)*dy(v) ) - int2d (Th) ( g*v ) + on(1, u = f);
+plot(u, value=1, fill=1, wait=1);
+
+int N = 10;
+real[int] xs(N);
+{
+	ifstream file("xs.txt", binary);
+	string line;
+	for (int i = 0; i < N; ++i) {
+		getline(file, line);
+		xs[i] = atof(line);
+	}
+}
+
+real[int] ys(N);
+{
+	ifstream file("ys.txt", binary);
+	string line;
+	for (int i = 0; i < N; ++i) {
+		getline(file, line);
+		ys[i] = atof(line);
+	}
+}
+
+for (int i = 0; i < N; ++i) {
+	cout << xs[i] << " " << ys[i] << endl;
+}
+
+func real delta(real n, int i) {
+	return n^2/pi * exp(-((x - xs[i])*n)^2) * exp(-((y - ys[i])*n)^2);
+}
+
+//Vh[int] deltas(N);
+//for (int i = 0; i < N; ++i) {
+//	deltas[i] = delta(120., i);
+//}
+
+//plot(deltas[0], value=1, wait=0, fill=1);
+
+//cout << "Integral value: " << int2d(Th) (deltas[0]) << endl;
+
+real[int] zs(N);
+for (int i = 0; i < N; ++i) {
+	zs[i] = f(xs[i], ys[i]);
+}
+real n = 120.;
+macro deltaMacro(i) (n^2/pi * exp(-((x - xs[i])*n)^2) * exp(-((y - ys[i])*n)^2)) //
+
+fespace Vm(Th, P2);
+Vm wf;
+wf = deltaMacro(0);
+real maxist = wf[].max;
+wf = zs[0]*wf/maxist;
+for (int i = 0; i < N; ++i) {
+	wf = wf + zs[i]*deltaMacro(i)/maxist;
+}
+plot(wf, wait=1, value=1, fill=1);
+
+Vm wh, whz;
+wh = deltaMacro(0);
+whz = zs[0] * wh;
+for (int i = 0; i < N; ++i) {
+	wh = wh + deltaMacro(i);
+}
+for (int i = 0; i < N; ++i) {
+	whz = whz + zs[i]*deltaMacro(i);
+}
+
+real e = 0.1;
+problem bottom(u, v) = 
+					int2d(Th) ( dx(u)*dx(v) + dy(u)*dy(v) ) 
+					+ int2d (Th) ( pow(e, -2) * wh * u * v ) 
+					- int2d(Th)( pow(e, -2) * whz * v ) 
+					+ on(1, u = f);
+bottom;
+plot(u, wait=1, fill=1, value=1);

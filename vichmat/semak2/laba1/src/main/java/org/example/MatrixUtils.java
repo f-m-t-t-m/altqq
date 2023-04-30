@@ -111,6 +111,14 @@ public class MatrixUtils {
         return res;
     }
 
+    public static double max(double[] a) {
+        double m = Double.MIN_VALUE;
+        for (int i = 0; i < a.length; i++) {
+            m = Math.max(a[i], m);
+        }
+        return m;
+    }
+
     private MatrixUtils() {
     }
 

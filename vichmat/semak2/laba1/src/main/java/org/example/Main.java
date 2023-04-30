@@ -5,14 +5,14 @@ public class Main {
 
     public static void main(String[] args) {
         final double[][] a = {
-                {2, -4, 4},
-                {1, 1, -4},
-                {3, 1, -2}
+                {5, -1, 3},
+                {1, -4, 2},
+                {2, -1, 5}
         };
 
-        final double[] b = {36, -27, -9};
+        final double[] b = {5, 20, 10};
 
-        beautifyPrintVector(OrthoSolver.solve(a, b));
+        beautifyPrintVector(SimpleIteration.solve(a, b));
 
     }
 
