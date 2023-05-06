@@ -1,15 +1,13 @@
 //построение области
-real a, b, x0, y0;
 int m = 10;
-a = 3;
-b = 3;
-x0 = a/2.;
-y0 = b/2.;
-border g1(t=0,2*pi) {x = x0 + a*cos(t); y = y0 + b*sin(t);};
-border g2(t=0,1) {x = a/4 + a/2*t; y = 3*b/4;};
-border g3(t=2*pi,pi) {x = x0 + a/4*cos(t); y = 3*b/4 + a/4*sin(t);};
-plot(g1(m)+g2(m)+g3(m), wait=1);
-mesh Th = buildmesh(g1(m)+g2(m)+g3(m));
+border g1(t=0,1) {x=t; y=0; label=2;};
+border g2(t=0,1) {x=t+1; y=0; label=2;};
+border g3(t=0,1) {x=2; y=t; label=1;};
+border g4(t=0,1) {x=t+1; y=1; label=3;};
+border g5(t=0,1) {x=t; y=1; label=2;};
+border g6(t=0,1) {x=0; y=t; label=1;};
+plot(g1(m)+g2(m)+g3(m)+g4(-m)+g5(-m)+g6(-m), wait=1);
+mesh Th = buildmesh(g1(m)+g2(m)+g3(m)+g4(-m)+g5(-m)+g6(-m));
 plot(Th, wait=1);
 //cout << "Th = " << Th.nt << endl;
 //for (int i = 0; i <= Th.nt; ++i) {
@@ -19,7 +17,24 @@ plot(Th, wait=1);
 //	}
 //}
 
-//func f = pow(x,2) + x*y + 1;
-//fespace Vh(Th, P1);
+func Ttilde = pow(x,2) + x*y + 1;
+fespace Vh(Th, P1);
 //Vh fe = f;
 //plot(fe, fill=1, wait=1);
+Vh T, P;
+real lambax = 1;
+real lambday = 1;
+real Q = 1;
+real q = 2;
+real Tinf = 1;
+real h = 2;
+
+problem Laplas(T, P) = 
+					int2d(Th) ( lambax*dx(T)*dx(P) + lambday*dy(T)*dx(P) )
+					+ int2d(Th) ( Q*P )
+					+ int1d(Th, 2) ( h*T*P )
+					- int1d(Th, 2) ((h*Tinf -q)*P)
+					+ on(1, T=Ttilde);
+
+Laplas;
+plot(T, value=true, fill=true, wait=true);

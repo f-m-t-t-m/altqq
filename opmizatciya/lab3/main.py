@@ -1,8 +1,6 @@
 import math
-
 import numpy as np
 import enum
-
 
 class TaskType(enum.Enum):
     direct = 0
@@ -76,7 +74,6 @@ def simplex(a, b, c, task_type: TaskType):
     else:
         simplex_table = build_matrix_for_dual_task(a, b)
         y_bias = 1
-        print("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
 
     it = 0
     while True:
@@ -131,7 +128,5 @@ if __name__ == '__main__':
     a = np.loadtxt('a1.txt', usecols=range(6))
     b = np.loadtxt('b1.txt', usecols=range(1), ndmin=2)
     c = np.loadtxt('c1.txt', usecols=range(1))
-    res = simplex(a, b, c, TaskType.direct)
-    print(np.round(res[0], 2))
-    # ans = simplex(res[1], b, [], TaskType.dual)
-    # print(np.round(ans[0], 2))
+    res = simplex(a.T, b, c, TaskType.secondary)
+    ans = simplex(res[1], b, [], TaskType.dual)

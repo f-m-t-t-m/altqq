@@ -1,6 +1,8 @@
 package org.example;
 
 
+import java.util.concurrent.CompletableFuture;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -12,8 +14,8 @@ public class Main {
 
         final double[] b = {5, 20, 10};
 
-        beautifyPrintVector(SimpleIteration.solve(a, b));
-
+        CompletableFuture.runAsync(() -> System.out.println("123"));
+        beautifyPrintVector(new SeidelMethod().solve(a, b));
     }
 
     private static void beautifyPrintVector(double[] vec) {
