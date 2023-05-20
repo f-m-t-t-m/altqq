@@ -1,0 +1,43 @@
+//построение области
+int m = 30;
+real a = 1.;
+real b = 1.;
+
+border g1(t=0,1) {x=a*t; y=0; label=2;};
+border g2(t=0,1) {x=a; y=b*t; label=2;};
+border g3(t=0,1) {x=a-a*t; y=b; label=2;};
+border g4(t=0,1) {x=0; y=b-b*t; label=2;};
+border g5(t=0,2*pi){ x=0.25*a*cos(t) + a/2; y=0.25*b*sin(t) + b/2; label=1;}
+plot(g1(m) + g2(m) + g3(m) + g4(m) + g5(m), wait=true);
+
+mesh Th = buildmesh(g1(m)+g2(m)+g3(m)+g4(m)+g5(-m));
+plot(Th, wait=1);
+
+func real uExact1(real t) {
+	return x^2 + (t+1)^2;
+}
+
+real lambda = 2.;
+func real f1(real t) {
+	return 2*(t+1) - lambda*(2-cos(y));
+}
+
+func g21 = sin(y);
+func g22 = 2*x;
+func g23 = -g21;
+func g24 = -g22;
+
+fespace Vh(Th, P1);
+//Vh u0e = uExact1(0);
+//plot(u0e, fill=true, wait=true);
+real tau = 0.1;
+Vh u, v, uExact, f, uOld;
+uExact = uExact1(0);
+f = f1(0);
+
+problem Task(u, v) = 
+				int2d(Th) (u*v + lambda*tau*(dx(u)*dx(v) + dy(u)*dy(v)) -
+				int1d(Th, 2) (lambda*tau * (dx(uExact)*N.x + dy(uExact)*N.y) -
+				int2d(Th)(uExact + tau*f) +
+				on(2, u = uExact);
+Task;

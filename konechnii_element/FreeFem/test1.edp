@@ -1,36 +1,31 @@
 //построение области
-int m = 10;
+int m = 1;
+real l = 1.;
+real hTriangle = l^2 - (l/2)^2;
+cout << hTriangle << endl;
 border g1(t=0,1) {x=t; y=0; label=2;};
-border g2(t=0,1) {x=t+1; y=0; label=2;};
-border g3(t=0,1) {x=2; y=t; label=1;};
-border g4(t=0,1) {x=t+1; y=1; label=3;};
-border g5(t=0,1) {x=t; y=1; label=2;};
-border g6(t=0,1) {x=0; y=t; label=1;};
-plot(g1(m)+g2(m)+g3(m)+g4(-m)+g5(-m)+g6(-m), wait=1);
-mesh Th = buildmesh(g1(m)+g2(m)+g3(m)+g4(-m)+g5(-m)+g6(-m));
+border g2(t=0,1) {x=l+t; y=0; label=2;};
+border g3(t=0,1) {x=2*l+t/2; y=hTriangle*(t); label=2;};
+border g4(t=0,1) {x=2.5*l-t; y=hTriangle; label=1;};
+border g5(t=0,1) {x=1.5*l-t; y=hTriangle; label=1;};
+border g6(t=0,1) {x=0.5*l-t/2; y=hTriangle*(1-t); label=3;};
+plot(g1(m) + g2(m) + g3(m) + g4(m) + g5(m) + g6(m), wait=1);
+mesh Th = buildmesh(g1(m)+g2(m)+g3(m)+g4(m)+g5(m)+g6(m));
 plot(Th, wait=1);
-//cout << "Th = " << Th.nt << endl;
-//for (int i = 0; i <= Th.nt; ++i) {
-//	cout << i << endl; 
-//	for (int j = 0; j < 3; ++j) {
-//		cout << j << " " << Th[i][j].x << " " << Th[i][j].y << endl;
-//	}
-//}
 
-func Ttilde = pow(x,2) + x*y + 1;
+
 fespace Vh(Th, P1);
-//Vh fe = f;
-//plot(fe, fill=1, wait=1);
 Vh T, P;
-real lambax = 1;
-real lambday = 1;
-real Q = 1;
-real q = 2;
-real Tinf = 1;
-real h = 2;
+real Ttilde = 2.;
+real lambax = 1.;
+real lambday = 2.;
+real Q = 3.;
+real q = 2.;
+real Tinf = 0.;
+real h = 1.;
 
 problem Laplas(T, P) = 
-					int2d(Th) ( lambax*dx(T)*dx(P) + lambday*dy(T)*dx(P) )
+					int2d(Th) ( lambax*dx(T)*dx(P) + lambday*dy(T)*dy(P) )
 					+ int2d(Th) ( Q*P )
 					+ int1d(Th, 2) ( h*T*P )
 					- int1d(Th, 2) ((h*Tinf -q)*P)
@@ -38,3 +33,5 @@ problem Laplas(T, P) =
 
 Laplas;
 plot(T, value=true, fill=true, wait=true);
+
+cout << T[] << endl;

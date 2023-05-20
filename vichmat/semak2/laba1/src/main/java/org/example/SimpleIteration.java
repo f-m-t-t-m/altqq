@@ -6,12 +6,15 @@ public class SimpleIteration {
 
     public double[] solve(double[][] a, double[] b) {
         double[][] solveMatrix = buildSolveMatrix(a);
-        double[] curX = {1, -5, 2};
+        double[] curX = new double[b.length];
         double[] prevX;
+        int it = 0;
         do {
+            ++it;
             prevX = curX;
             curX = calcNewX(a, b, prevX, solveMatrix);
         } while (Math.abs(max(prevX) - max(curX)) > 1e-6);
+        System.out.println(it);
         return curX;
     }
 
