@@ -1,14 +1,14 @@
 //построение области
 int m = 1;
-real l = 1.;
-real hTriangle = l^2 - (l/2)^2;
+real l = 2.;
+real hTriangle = sqrt(l^2 - (l/2)^2);
 cout << hTriangle << endl;
-border g1(t=0,1) {x=t; y=0; label=2;};
-border g2(t=0,1) {x=l+t; y=0; label=2;};
-border g3(t=0,1) {x=2*l+t/2; y=hTriangle*(t); label=2;};
-border g4(t=0,1) {x=2.5*l-t; y=hTriangle; label=1;};
-border g5(t=0,1) {x=1.5*l-t; y=hTriangle; label=1;};
-border g6(t=0,1) {x=0.5*l-t/2; y=hTriangle*(1-t); label=3;};
+border g1(t=0,1) {x=t*l; y=0; label=2;};
+border g2(t=0,1) {x=l+t*l; y=0; label=2;};
+border g3(t=0,1) {x=2*l+t/2*l; y=hTriangle*(t); label=2;};
+border g4(t=0,1) {x=2.5*l-l*t; y=hTriangle; label=1;};
+border g5(t=0,1) {x=1.5*l-l*t; y=hTriangle; label=1;};
+border g6(t=0,1) {x=0.5*l-t/2*l; y=hTriangle*(1-t); label=3;};
 plot(g1(m) + g2(m) + g3(m) + g4(m) + g5(m) + g6(m), wait=1);
 mesh Th = buildmesh(g1(m)+g2(m)+g3(m)+g4(m)+g5(m)+g6(m));
 plot(Th, wait=1);
@@ -28,7 +28,7 @@ problem Laplas(T, P) =
 					int2d(Th) ( lambax*dx(T)*dx(P) + lambday*dy(T)*dy(P) )
 					+ int2d(Th) ( Q*P )
 					+ int1d(Th, 2) ( h*T*P )
-					- int1d(Th, 2) ((h*Tinf -q)*P)
+					- int1d(Th, 2) ((h*Tinf-q)*P)
 					+ on(1, T=Ttilde);
 
 Laplas;

@@ -27,3 +27,5 @@ if __name__ == '__main__':
     b = np.asarray([3, 4, 5])
 
     print(helper(a, 2) @ b)
+
+    print(np.linalg.inv(a) @ b)

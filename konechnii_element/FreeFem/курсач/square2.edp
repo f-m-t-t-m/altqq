@@ -7,20 +7,17 @@ border g3(t = 0, 1) {x = a; y = b*(1 - t); label = 1;};
 border g4(t = 0, 1) {x = a*(1 - t); y = 0; label = 1;};
 
 mesh Th = buildmesh (g1(-m) + g2(-m) + g3(-m) + g4(-m));
-Th = adaptmesh(Th, hmin = 0.05, hmax = 0.015, nbvx = 1e5);
-//plot(Th, wait=1);
+Th = adaptmesh(Th, hmin = 0.02, hmax = 0.025, nbvx = 1e6);
 
-func f = 3*sin(x) + pow(y - 0.2, 2);
-fespace Vh(Th, P1);
+//func f = atan(10 * (x + y));
+//func f = atan2(3*y, x);
+func f = exp(10*x);
+
+fespace Vh(Th, P2);
 Vh fe = f;
 plot(fe, fill=1, wait=1);
 
-func g = 3*sin(x) - 2;
-Vh u, v;
-solve poisson(u, v) = int2d(Th) ( dx(u)*dx(v) + dy(u)*dy(v) ) - int2d (Th) ( g*v ) + on(1, u = f);
-plot(u, value=1, fill=1, wait=1);
-
-int N = 30;
+int N = 100;
 real[int] xs(N);
 {
 	ifstream file("xs.txt", binary);
@@ -41,26 +38,13 @@ real[int] ys(N);
 	}
 }
 
+real[int] zs(N);
 for (int i = 0; i < N; ++i) {
-	cout << xs[i] << " " << ys[i] << endl;
+	zs[i] = f(xs[i], ys[i]);
 }
 
 func real delta(real n, int i) {
 	return n^2/pi * exp(-((x - xs[i])*n)^2) * exp(-((y - ys[i])*n)^2);
-}
-
-//Vh[int] deltas(N);
-//for (int i = 0; i < N; ++i) {
-//	deltas[i] = delta(120., i);
-//}
-
-//plot(deltas[0], value=1, wait=0, fill=1);
-
-//cout << "Integral value: " << int2d(Th) (deltas[0]) << endl;
-
-real[int] zs(N);
-for (int i = 0; i < N; ++i) {
-	zs[i] = f(xs[i], ys[i]);
 }
 real n = 120.;
 macro deltaMacro(i) (n^2/pi * exp(-((x - xs[i])*n)^2) * exp(-((y - ys[i])*n)^2)) //
@@ -85,20 +69,20 @@ for (int i = 0; i < N; ++i) {
 	whz = whz + zs[i]*deltaMacro(i);
 }
 
+Vh u, v;
 real e = 0.1;
 problem bottom(u, v) = 
 					int2d(Th) ( dx(u)*dx(v) + dy(u)*dy(v) ) 
 					+ int2d (Th) ( pow(e, -2) * wh * u * v ) 
 					- int2d(Th)( pow(e, -2) * whz * v ) 
-					+ on(1, u = f);
-					
+					+ on(1, u = f);					
 bottom;
 plot(u, wait=1, fill=1, value=1);
 
-//Th = adaptmesh(Th, hmin = 0.08, hmax = 0.5, nbvx = 1e5);
-//u = u;
+real error = sqrt(int2d(Th)((fe - u)^2)) / sqrt(int2d(Th)(fe^2));
+cout << "error = " << error;
 
-{ ofstream gnu("plot.dat");
+{ ofstream gnu("4func/plot6.dat");
     for (int i = 0; i < Th.nt; i++) {
 		for (int j = 0; j < 3; j++) {
 			gnu << Th[i][j].x << " " << Th[i][j].y << " " << u[][Vh(i,j)] << endl;

@@ -75,7 +75,7 @@ if __name__ == '__main__':
     n_str = 4
     data = np.loadtxt("data.txt", usecols=(range(3)), ndmin=2)
 
-    l = 1
+    l = 2
     h = np.sqrt(l ** 2 - (l / 2) ** 2)
     e_1 = np.array([[0, l / 2, l], [0, h, 0]])
     e_2 = np.array([[l, 3 * l / 2, l / 2], [0, h, h]])
@@ -126,10 +126,10 @@ if __name__ == '__main__':
     print(U)
 
     with open("xs.txt", 'w') as xs:
-        for i in range(50):
+        for i in range(100):
             xs.write(str(np.random.uniform(0, 1)) + '\n')
 
     with open("ys.txt", 'w') as xs:
-        for i in range(50):
+        for i in range(100):
             xs.write(str(np.random.uniform(0, 1)) + '\n')
 

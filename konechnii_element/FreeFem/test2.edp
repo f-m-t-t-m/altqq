@@ -1,43 +1,47 @@
-//построение области
-int m = 30;
-real a = 1.;
-real b = 1.;
+int m = 50;
 
-border g1(t=0,1) {x=a*t; y=0; label=2;};
-border g2(t=0,1) {x=a; y=b*t; label=2;};
-border g3(t=0,1) {x=a-a*t; y=b; label=2;};
-border g4(t=0,1) {x=0; y=b-b*t; label=2;};
-border g5(t=0,2*pi){ x=0.25*a*cos(t) + a/2; y=0.25*b*sin(t) + b/2; label=1;}
-plot(g1(m) + g2(m) + g3(m) + g4(m) + g5(m), wait=true);
+real a = 1.0;
+real b = 1.0;
 
-mesh Th = buildmesh(g1(m)+g2(m)+g3(m)+g4(m)+g5(-m));
+real lambda = 2;
+real tau = 1. / m;
+real t = 0.;
+
+border g1(t=0,1) {x = a * t; y = 0; label = 1;};
+border g2(t=0,1) {x = a; y = b * t; label = 1;};
+border g3(t=0,1) {x = a - a * t; y = b; label = 1;};
+border g4(t=0,1) {x = 0; y = b - b * t; label = 1;};
+border g5(t=0,2 * pi) {x = 0.25 * a * cos(t) + a / 2; y = 0.25 * b * sin(t) + b / 2; label = 2;};
+
+mesh Th = buildmesh(g1(m) + g2(m) + g3(m) + g4(m) + g5(-m));
+Th = adaptmesh(Th, hmin = 1, hmax = 2, nbvx = 10);
+
 plot(Th, wait=1);
 
-func real uExact1(real t) {
-	return x^2 + (t+1)^2;
-}
+fespace Vh(Th, P1); 
+Vh u0 = x^2 + cos(y) + 1;
+Vh f = 2 * (t + 1) - lambda * (2 - cos(y));
+Vh ut = x^2 + cos(y) + (t + 1)^2;
+Vh uOld = ut;
+Vh u;
+Vh v;
 
-real lambda = 2.;
-func real f1(real t) {
-	return 2*(t+1) - lambda*(2-cos(y));
-}
+plot(u0, fill=1, wait=1);
 
-func g21 = sin(y);
-func g22 = 2*x;
-func g23 = -g21;
-func g24 = -g22;
+problem sim(u, v) = int2d(Th)(u * v + lambda * tau * (dx(u) * dx (v) + dy(u) * dy(v)))
+	- int1d(Th, 1)(lambda * tau * (dx(ut)*N.x + dy(ut) * N.y)*v)
+	- int2d(Th)((uOld + tau * f) * v)
+	+ on(2, u=ut);
 
-fespace Vh(Th, P1);
-//Vh u0e = uExact1(0);
-//plot(u0e, fill=true, wait=true);
-real tau = 0.1;
-Vh u, v, uExact, f, uOld;
-uExact = uExact1(0);
-f = f1(0);
+for (int i  = 0; i < m; ++i) {
+	t += tau;
+	ut = x^2 + cos(y) + (t + 1)^2;
+	f = 2 * (t + 1) - lambda * (2 - cos(y));
+	sim;
+	uOld = u;
+};
 
-problem Task(u, v) = 
-				int2d(Th) (u*v + lambda*tau*(dx(u)*dx(v) + dy(u)*dy(v)) -
-				int1d(Th, 2) (lambda*tau * (dx(uExact)*N.x + dy(uExact)*N.y) -
-				int2d(Th)(uExact + tau*f) +
-				on(2, u = uExact);
-Task;
+plot(u, cmm="SIM", fill=1, wait=1);
+
+real error = sqrt(int2d(Th)((ut - u)^2)) / sqrt(int2d(Th)(ut^2));
+cout << "error = " << error;
