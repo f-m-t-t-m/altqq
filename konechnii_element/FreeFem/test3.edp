@@ -1,0 +1,49 @@
+int m = 50;
+
+real a = 0.5;
+real b = 0.5;
+
+real lambda = 2;
+int M = 100;
+real tau = 1. / M;
+real t = 0.;
+
+border g1(t=0,1) {x = a * t; y = 0; label = 1;};
+border g2(t=0,1) {x = a; y = b * t; label = 1;};
+border g3(t=0,1) {x = a - a * t; y = b; label = 1;};
+border g4(t=0,1) {x = 0; y = b - b * t; label = 1;};
+border g5(t=0,2 * pi) {x = 0.25 * a * cos(t) + a / 2; y = 0.25 * b * sin(t) + b / 2; label = 2;};
+
+mesh Th = buildmesh(g1(m) + g2(m) + g3(m) + g4(m) + g5(-m));
+Th = adaptmesh(Th, hmin = 0.1, hmax = 0.2, nbvx = 1e6);
+
+plot(Th, wait=1);
+
+fespace Vh(Th, P1); 
+Vh u0 = x^2 + cos(y) + 1;
+Vh ut = x^2 + cos(y) + (t + 1)^2;
+Vh f = 2 * (t + 1) - lambda * (2 - cos(y)) - 3*(x^2 + cos(y)+(t+1)^2)^2;
+Vh uOld = ut;
+Vh u;
+Vh v;
+
+plot(u0, fill=1, wait=1);
+
+problem sim(u, v) = int2d(Th)(u * v + lambda * tau * (dx(u) * dx (v) + dy(u) * dy(v)))
+	- int1d(Th, 1)(lambda * tau * (dx(ut)*N.x + dy(ut) * N.y)*v)
+	- int2d(Th)((uOld + tau * f) * v)
+	- int2d(Th)(3 * tau * u * uOld * v)
+	+ on(2, u=ut);
+
+for (int i  = 0; i < M; ++i) {
+	t += tau;
+	ut = x^2 + cos(y) + (t + 1)^2;
+	f = 2 * (t + 1) - lambda * (2 - cos(y)) - 3*(x^2 + cos(y)+(t+1)^2)^2;
+	sim;
+	uOld = u;
+};
+
+plot(u, cmm="SIM", fill=1, wait=1);
+
+real error = sqrt(int2d(Th)((ut - u)^2)) / sqrt(int2d(Th)(ut^2));
+cout << "error = " << error;

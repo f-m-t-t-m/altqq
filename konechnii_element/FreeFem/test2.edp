@@ -14,7 +14,7 @@ border g4(t=0,1) {x = 0; y = b - b * t; label = 1;};
 border g5(t=0,2 * pi) {x = 0.25 * a * cos(t) + a / 2; y = 0.25 * b * sin(t) + b / 2; label = 2;};
 
 mesh Th = buildmesh(g1(m) + g2(m) + g3(m) + g4(m) + g5(-m));
-Th = adaptmesh(Th, hmin = 1, hmax = 2, nbvx = 10);
+Th = adaptmesh(Th, hmin = 0.1, hmax = 0.2, nbvx = 1e6);
 
 plot(Th, wait=1);
 

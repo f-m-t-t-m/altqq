@@ -1,9 +1,0 @@
-\babel@toc {russian}{}\relax 
-\contentsline {section}{\numberline {1}Введение}{3}{}%
-\contentsline {section}{\numberline {2}Задание 1}{4}{}%
-\contentsline {subsection}{\numberline {2.1}Постановка задачи}{4}{}%
-\contentsline {subsection}{\numberline {2.2}Решение}{4}{}%
-\contentsline {section}{\numberline {3}Задание 2}{7}{}%
-\contentsline {subsection}{\numberline {3.1}Постановка задачи}{7}{}%
-\contentsline {subsection}{\numberline {3.2}Решение}{7}{}%
-\contentsline {section}{\numberline {4}Заключение}{10}{}%

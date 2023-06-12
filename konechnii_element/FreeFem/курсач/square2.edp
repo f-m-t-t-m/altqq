@@ -71,11 +71,10 @@ for (int i = 0; i < N; ++i) {
 
 Vh u, v;
 real e = 0.1;
-problem bottom(u, v) = 
-					int2d(Th) ( dx(u)*dx(v) + dy(u)*dy(v) ) 
-					+ int2d (Th) ( pow(e, -2) * wh * u * v ) 
-					- int2d(Th)( pow(e, -2) * whz * v ) 
-					+ on(1, u = f);					
+problem bottom(u, v) = int2d(Th) ( dx(u)*dx(v) + dy(u)*dy(v) ) 
+			+ int2d (Th) ( pow(e, -2) * wh * u * v ) 
+			- int2d(Th)( pow(e, -2) * whz * v ) 
+			+ on(1, u = f);					
 bottom;
 plot(u, wait=1, fill=1, value=1);
 

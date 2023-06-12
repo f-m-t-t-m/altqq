@@ -8,7 +8,7 @@ N = 10
 
 
 def a(x, i, j):
-    return j*i*pi**2*cos(i*pi*x)*cos(j*pi*x)*e**x + sin(i*pi*x)*sin(j*pi*x)
+    return j*i*pi**2*(x*x + 1)*sin(j*pi*x)*sin(i*pi*x) + x*cos(j*pi*x)*cos(i*pi*x)
 
 
 def integrate_a(i, j):
@@ -16,7 +16,7 @@ def integrate_a(i, j):
 
 
 def g(x, j):
-    return (e**x + 1)*sin(j*pi*x)
+    return cos(j*pi*x)
 
 
 def integrate_g(j):
@@ -24,7 +24,7 @@ def integrate_g(j):
 
 
 def f(x, j):
-    return (x**2 - 2*x*e**x - x - e**x)*sin(j*pi*x)
+    return (-(2*x*(x*x - x) + (2*x-1)*(x*x+1)) + (x**4)/3 - (x**3)/2)*cos(j*pi*x)
 
 
 def integrate_f(j):
@@ -35,21 +35,21 @@ def make_matrix(n: int) -> np.matrix:
     matrix = np.zeros((n, n))
     for i in range(n):
         for j in range(n):
-            matrix[i][j] = integrate_a(i, j)
+            matrix[i][j] = integrate_a(j, i)
     return np.matrix(matrix)
 
 
 def make_vector(n: int) -> np.matrix:
     vector = np.zeros((n, 1))
     for i in range(n):
-        vector[i][0] = integrate_f(i)
+        vector[i][0] = integrate_g(i)
     return np.matrix(vector)
 
 
 def u(x):
     res = 0
     for idx, coord in np.ndenumerate(vectorC):
-        res += coord*sin((idx[0] + 1)*pi*x)
+        res += coord*cos((idx[0] + 1)*pi*x)
     return res
 
 
@@ -58,13 +58,13 @@ if __name__ == '__main__':
     vectorG = make_vector(N)
     vectorC = np.linalg.inv(matrixA) @ vectorG
     np.set_printoptions(suppress=True)
-    # print(vectorC)
+    #print(vectorC)
     xs = np.linspace(0, 1, 10)
     u_values = [round(u(x), 7) for x in xs]
     print(u_values)
     plt.plot(xs, u_values)
-    u_exact = lambda x: x**2 - x
+    u_exact = lambda x: x**3/3 - x**2/2
     u_exact_values = [round(u_exact(x), 7) for x in xs]
     print(u_exact_values)
-    # plt.plot(xs, u_exact_values)
+    plt.plot(xs, u_exact_values)
     plt.savefig("test.png")

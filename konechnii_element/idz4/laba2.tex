@@ -1,0 +1,51 @@
+\documentclass[a4paper, 14pt]{extarticle}
+\usepackage[justification=centering]{caption}
+\usepackage[russian]{babel}
+\usepackage{array}
+
+\begin{document}
+	\[ u = x^2 + \cos{y} + (t + 1)^2; \]
+	\[ f = 2(t + 1) - \lambda (2 - \cos{y}) - 3u^2 \]
+	
+	Вариационная постановка метода простой итерации: 
+	\[ \int_{\Omega} u^{i+1} \cdot vdx - \tau \lambda \int_{\Omega} \nabla^2 u^{i+1} \cdot vdx - 3\tau \int_{\Omega} u^{i+1} u^i v dx = \int_{\Omega} \big(\tau f^{i+1} + u^i\big) v dx \]
+	
+	Вариационная постановка метода Ньютона:
+	\[ \int_{\Omega} u^{i+1} \cdot vdx - \tau \lambda \int_{\Omega} \nabla^2 u^{i+1} \cdot vdx -6\tau \int_{\Omega} u^i u^{i+1} v dx + 3\tau\int_{\Omega}u^2_i vdx = \int_{\Omega} \big(\tau f^{i+1} + u^i\big) v dx \]
+	
+	\textbf{Эксперементы}
+	
+	\( \tau = 0.02 \)
+	\begin{center}
+	\begin{tabular}{|c|c|m{10em}|m{10em}|}
+		\hline
+			$h_{min}$ & $h_{max}$ & Погрешность метода простой итерации & Погрешность
+			метода Ньютона \\
+		\hline
+		 	$0.1$ & $0.2$ & $0.00253$ & $0.000860$\\
+ 		\hline
+ 			$0.02$ & $0.04$ & $0.00229$ & $0.000409$\\
+ 		\hline
+ 			$0.0015$ & $0.005$ & $0.00212$ & $0.0000628$\\
+ 		\hline
+	\end{tabular}
+	\end{center}
+
+	\( \tau = 0.01 \)
+	\begin{center}
+		\begin{tabular}{|c|c|m{10em}|m{10em}|}
+			\hline
+			$h_{min}$ & $h_{max}$ & Погрешность метода простой итерации & Погрешность
+			метода Ньютона \\
+			\hline
+			$0.1$ & $0.2$ & $0.00164$ & $0.000855$\\
+			\hline
+			$0.02$ & $0.04$ & $0.00129$ & $0.000406$\\
+			\hline
+			$0.0015$ & $0.005$ & $0.00108$ & $0.0000581$\\
+			\hline
+		\end{tabular}
+	\end{center}
+
+	\textbf{Вывод:} При уменьшении $\tau$ и размера конечных элементов точность увеличивается. Метод простой итерации более чувствителен к изменениям $\tau$, а метод Ньютона -- изменения размера конечных элементов. 
+\end{document}
