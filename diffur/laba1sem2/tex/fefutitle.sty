@@ -2,41 +2,38 @@
 \RequirePackage{multicol}
 \RequirePackage{graphicx}
 \RequirePackage{amsmath}
-\RequirePackage{datetime}
 \RequirePackage{geometry}
-\usepackage{lipsum} 
-
-\textwidth=17cm
-\textheight=26cm
-\oddsidemargin -0.5cm
-\topmargin -20mm
-
+\RequirePackage{fancyhdr}
 \newcommand{\uline}[1]{\underline{#1\vphantom{lp}}}
-
-\newdateformat{daydate}{\THEDAY}
-\newdateformat{monthdate}{\monthname[\THEMONTH]}
-\newdateformat{yeardate}{\THEYEAR}
+\newgeometry{top=2cm, bottom=2cm, right=15mm, left=25mm}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
 
 \newcommand{\fefutitle}[1] {
 	\begin{titlepage}
 		\thispagestyle{empty}
 		\parindent=0pt
-		%\newgeometry{top=2cm, bottom=2cm, right=2cm, left=2cm}
 
 		\begin{center}
 			
 			\parindent = 0pt
 			
-			\includegraphics[scale = 0.2]{fefu.pdf}
+			\includegraphics[scale = 0.25]{fefu.pdf}
 			
 			\vspace{10pt}
-			{\fontsize{9}{9} \selectfont МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}
+			{\fontsize{11}{11} \selectfont МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}
+			\vspace{-5pt}
+			
+			{\fontsize{11}{11} \selectfont Федеральное государственное автономное образовательное учреждение высшего образования}
 	
-			{\fontsize{10}{10} \selectfont Федеральное государственное автономное образовательное учреждение высшего образования}
+			\vspace{-2pt}
 	
-			\textbf{«Дальневосточный федеральный университет»}
+			{\fontsize{14.5}{14.5} \selectfont\textbf{«Дальневосточный федеральный университет»}}
 	
-			\textbf{(ДВФУ)}
+			{(ДВФУ)}
 			
 			\rule{\textwidth}{3pt}
 	
@@ -47,59 +44,65 @@
 			\vspace{15pt}
 			
 			\textbf{ИНСТИТУТ МАТЕМАТИКИ И КОМПЬЮТЕРНЫХ ТЕХНОЛОГИЙ}
-	
+			
 			\vspace{10pt}
+			
+			\textbf{(ШКОЛА)}
 	
-			\textbf{Кафедра информатики, математического и компьютерного моделирования}
+			\vspace{20pt}
+	
+			\textbf{Департамент математического и компьютерного моделирования}
 			
 			\vspace{30pt}
 	
 			\textbf{ОТЧЕТ}
 	
-			\vspace{12pt}
+			\vspace{30pt}
 	
 			к лабораторной работе №{#1} по дисциплине
+			
+			\vspace{5pt}
 			
 			<<Дифференциальные уравнения и теоретическая механика>>
 	
 			\vspace{12pt}
 	
 			Направление подготовки
+			
+			\vspace{5pt}
 	
 			01.03.02 <<Прикладная математика и информатика>>
 	
-			\vspace{30pt}
+			\vspace{20pt}
 				
 			\end{center}
 		
-		\begin{multicols}{2}
-		
-			\vfill{\null}
+			\begin{minipage}[c]{0.58\linewidth}
+				\vphantom{a}
+			\end{minipage}
+			\begin{minipage}[c]{0.42\linewidth}
 			
-			\columnbreak
+			Выполнил студент гр.
 			
-			Выполнил студент \newline гр. Б9120-01.03.02
+			\vspace{5pt}
 			
-			\(\underset{\textit{(ФИО)}}{\text{\uline{Агличеев А.О.}}}\)
+			Б9120-01.03.02
+			
+			\vspace{10pt}
+			
+			\(\underset{\textit{(Ф.И.О.)}}{\text{\uline{Агличеев А.О.}}}\)
 			\(\underset{\textit{(подпись)}}{\text{\uline{\hspace{50pt} }}}\)
-			\newline
 			
-			<<\uline{ \daydate{\today} }>> \uline{\monthdate{\today}} 20\uline{23} г.
-		
-		\end{multicols}
+			\vspace{20pt}
+			
+			<<\uline{15}>> \uline{июня} 20\uline{23} г.
+		\end{minipage}
 	
 		\begin{center}
 			\vfill
-			\textbf{г. Владивосток \linebreak \yeardate{\today}}
+			\textbf{г. Владивосток \vspace{5pt} \linebreak 2023}
 		\end{center}
-	\textheight=21cm
 	\end{titlepage}
-	%\restoregeometry
 	\setcounter{page}{2}
-	\topmargin -0mm
-	\oddsidemargin -0mm	
-	\textwidth=16cm
-	\textheight=21cm
-	
 	\tableofcontents
 }
