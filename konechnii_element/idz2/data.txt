@@ -1,0 +1,73 @@
+with i as (
+  select 
+    job_name, 
+    diff 
+  from 
+    (
+      select 
+        job_name, 
+        duration - (
+          lag(duration, 1) over (partition by job_name)
+        ) as diff, 
+        rn 
+      from 
+        (
+          select 
+            job_name, 
+            (
+              julianday(job_finished_time) - julianday(trigger_fire_time)
+            ) as duration, 
+            row_number() over (
+              partition by job_name 
+              order by 
+                trigger_fire_time ASC
+            ) as rn 
+          from 
+            qrtz_log 
+          WHERE 
+            job_status = 'OK'
+        ) 
+      where 
+        rn <= 2
+    ) 
+  where 
+    rn = 2
+), 
+j AS (
+  select 
+    job_name, 
+    max(
+      julianday(job_finished_time) - julianday(trigger_fire_time)
+    ) as max_dur 
+  from 
+    qrtz_log 
+  where 
+    job_status = 'OK'
+) 
+SELECT 
+  job_name, 
+  host_name, 
+  diff, 
+  max_dur 
+from 
+  (
+    select 
+      b.job_name, 
+      b.host_name, 
+      b.trigger_fire_time, 
+      b.job_finished_time, 
+      b.job_status, 
+      ifnull(i.diff, 0) as diff, 
+      j.max_dur, 
+      row_number() over (
+        partition by b.job_name 
+        order by 
+          trigger_fire_time DESC
+      ) as rn 
+    from 
+      qrtz_log as b 
+      LEFT join i on b.job_name = i.job_name 
+      left join j on j.job_name = b.job_name
+  ) 
+where 
+  rn = 1
