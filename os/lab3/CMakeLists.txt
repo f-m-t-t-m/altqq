@@ -1,0 +1,5 @@
+PROJECT(mthreads)
+ADD_EXECUTABLE(my_threads my_thread.hpp my_shmem.hpp logger.cpp)
+IF (NOT WIN32)
+    TARGET_LINK_LIBRARIES(my_threads rt pthread)
+ENDIF (NOT WIN32)

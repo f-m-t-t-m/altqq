@@ -1,1 +1,0 @@
-g++ logger.cpp -static-libstdc++ -static-libgcс
