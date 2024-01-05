@@ -9,6 +9,10 @@ def K(x, s):
     return (1+s)*(np.e**(0.2*x*s)-1)
 
 
+def f(x):
+    return 1/x
+
+
 def lagrange():
     interval = np.linspace(0, 1, 3)
     betas = []
@@ -29,15 +33,6 @@ def lagrange():
     return alphas, betas
 
 
-def f(x):
-    return 1/x
-
-
-def u(x, cs, alphas):
-    alpha_values = np.array([alpha(x) for alpha in alphas])
-    return f(x) + alpha_values.dot(cs)
-
-
 def solve_system(alphas, betas):
     fs = np.array([integrate.quad(lambda x: beta(x) * f(x), 0, 1)[0] for beta in betas])
     A = []
@@ -52,29 +47,6 @@ def solve_system(alphas, betas):
     return np.linalg.solve(A, fs)
 
 
-if __name__ == '__main__':
-    alphas1 = np.array([lambda x: x, lambda x: x ** 2, lambda x: x ** 3])
-    betas1 = np.array([lambda s: 0.2*(s+s**2), lambda s: 0.02*(s**2+s**3), lambda s: 0.0013*(s**3+s**4)])
-
-    alphas = lagrange()[0]
-    betas = lagrange()[1]
-    cs = solve_system(alphas, betas)
-    cs1 = solve_system(alphas1, betas1)
-
-    interval = np.linspace(0, 1, 11)
-
-    figure, axis = plt.subplots(2)
-    figure.tight_layout(pad=1.0)
-
-    axis[0].plot(interval, [u(x, cs, alphas) for x in interval], 'b')
-    axis[0].set_title("Аппроксимация ядра многочленом Лагранжа")
-
-    axis[1].plot(interval, [u(x, cs1, alphas1) for x in interval], 'b')
-    axis[1].set_title("Аппроксимация ядра рядом Тейлора")
-    plt.show()
-
-    for i in range(11):
-        print(interval[i], end=' ')
-        print(u(interval[i], cs, alphas), end=' ')
-        print(u(interval[i], cs1, alphas1))
-        print("---------")
+def u(x, cs, alphas):
+    alpha_values = np.array([alpha(x) for alpha in alphas])
+    return f(x) + alpha_values.dot(cs)
