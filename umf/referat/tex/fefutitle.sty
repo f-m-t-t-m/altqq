@@ -1,0 +1,102 @@
+\RequirePackage[russian]{babel}
+\RequirePackage{multicol}
+\RequirePackage{graphicx}
+\RequirePackage{amsmath}
+\RequirePackage{datetime}
+\RequirePackage{geometry}
+\usepackage{indentfirst}
+
+\newcommand{\uline}[1]{\underline{#1\vphantom{lp}}}
+
+\newdateformat{daydate}{\THEDAY}
+\newdateformat{monthdate}{\monthname[\THEMONTH]}
+\newdateformat{yeardate}{\THEYEAR}
+
+\newcommand{\fefutitle}[2] {
+	\begin{titlepage}
+		\thispagestyle{empty}
+		\parindent=0pt
+		%\newgeometry{top=2cm, bottom=2cm, right=2cm, left=2cm}
+
+		\begin{center}
+			
+			\parindent = 0pt
+			
+			\includegraphics[scale = 0.2]{fefu.pdf}
+			
+			\vspace{10pt}
+			{\fontsize{9}{9} \selectfont МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ РОССИЙСКОЙ ФЕДЕРАЦИИ}
+	
+			{\fontsize{10}{10} \selectfont Федеральное государственное автономное образовательное учреждение высшего образования}
+	
+			\textbf{«Дальневосточный федеральный университет»}
+	
+			\textbf{(ДВФУ)}
+			
+			\rule{\textwidth}{3pt}
+	
+			\vspace{\dimexpr -15pt} 
+			
+			\rule{\textwidth}{1pt}
+	
+			\vspace{15pt}
+			
+			\textbf{ИНСТИТУТ МАТЕМАТИКИ И КОМПЬЮТЕРНЫХ ТЕХНОЛОГИЙ}
+	
+			\vspace{10pt}
+	
+			\textbf{Департамент математического и компьютерного моделирования}
+			
+			\vspace{30pt}
+	
+			\textbf{Реферат}
+			
+			\textbf{<<{#2}>>}
+	
+			\vspace{12pt}
+	
+			по дисциплине <<Уравнения математической физики>>
+	
+			\vspace{12pt}
+	
+			Направление подготовки
+	
+			01.03.02 «Прикладная математика и информатика»
+	
+			\vspace{30pt}
+				
+			\end{center}
+		
+		\begin{multicols}{2}
+		
+			\vfill{\null}
+			
+			\columnbreak
+			
+			Выполнил студент \newline гр. Б9120-01.03.02миопд
+			
+			\(\underset{\textit{(ФИО)}}{\text{\uline{Агличеев А.О.}}}\)
+			\(\underset{\textit{(подпись)}}{\text{\uline{\hspace{50pt} }}}\)
+			\newline
+			
+			Проверил д.ф.-м.н.
+			
+			\(\underset{\textit{(ФИО)}}{\text{\uline{Алексеев Г.В.}}}\)
+			\(\underset{\textit{(подпись)}}{\text{\uline{\hspace{50pt} }}}\)
+			\newline
+			
+			<<\uline{ \daydate{\today} }>> \uline{\monthdate{\today}} 20\uline{23} г.
+		
+		\end{multicols}
+	
+		\begin{center}
+			\vfill
+			\textbf{г. Владивосток \linebreak \yeardate{\today}}
+		\end{center}
+	\textheight=21cm
+	\end{titlepage}
+	%\restoregeometry
+	\setcounter{page}{2}
+	
+	\tableofcontents
+}
