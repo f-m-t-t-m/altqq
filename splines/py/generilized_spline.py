@@ -1,12 +1,9 @@
-import math
-
 import numpy as np
-import matplotlib.pyplot as plt
 from math import *
+from matplotlib import pyplot as plt
 from scipy import integrate
 
 from functions import *
-
 
 rational = lambda t, p: t ** 3 / (1 + p * (1 - t)) * 1 / (6 + 6 * p + 2 * p ** 2)
 rational_d = lambda t, p: (3 * t ** 2 * (1 + p * (1 - t)) + p * t ** 3) / (1 + p * (1 - t)) ** 2 * 1 / (6 + 6 * p + 2 * p ** 2)
@@ -21,7 +18,7 @@ exponent_int = lambda p: (6/(p**4*e**p) + 1/p - 3/p**2 + 6/p**3 - 6/p**4 - 1/2) 
 hyperbola = lambda t, p: (sinh(p*t)-p*t)/(p**2*sinh(p))
 hyperbola_d = lambda t, p: (p*cosh(p*t)-p)/(p**2*sinh(p))
 hyperbola_d_2 = lambda t, p: (p**2*sinh(p*t))/(p**2*sinh(p))
-hyperbola_int = lambda p: (cosh(p)/p - p/2 - 1/p - 1/2*(sinh(p)-p)) / (p**2*sinh(p))
+hyperbola_int = lambda p: (cosh(p)/p - 1/p - sinh(p)/2) / (p**2*sinh(p))
 
 variable_order = lambda t, p: t**(p+3) / (p**2+5*p+6)
 variable_order_d = lambda t, p: (p+3)*t**(p+2) / (p**2+5*p+6)
@@ -34,21 +31,38 @@ def _calc_M(xs, function, derive, correcting_f, correcting_f_derivative, q):
     f = [function(x) for x in xs]
 
     a = np.zeros((len(xs), len(xs)))
-    a[0][0] = 1
     for i in range(1, len(xs) - 1):
         a[i][i - 1] = correcting_f(1, q[i-1]) * h[i - 1]
         a[i][i] = (- correcting_f(1, q[i-1])*h[i-1] - correcting_f(1, q[i])*h[i]
                    + correcting_f_derivative(1, q[i-1])*h[i-1] + correcting_f_derivative(1, q[i])*h[i])
         a[i][i + 1] = correcting_f(1, q[i]) * h[i]
-    a[-1][-1] = 1
 
     d = np.zeros(len(xs))
-    d[0] = derive[0]
     for i in range(1, len(xs) - 1):
         d[i] = (f[i+1] - f[i])/h[i] - (f[i] - f[i-1])/h[i-1]
-    d[-1] = derive[1]
+
+    apply_first_boundary_conditions(a, d, correcting_f, correcting_f_derivative, f, h, q, derive)
+    #apply_second_boundary_conditions(a, d, correcting_f, correcting_f_derivative, f, h, q, derive)
 
     return np.linalg.solve(a, d)
+
+
+def apply_second_boundary_conditions(a, d, correcting_f, correcting_f_derivative, f, h, q, derive):
+    a[0][0] = 1
+    a[-1][-1] = 1
+    d[0] = derive[0]
+    d[-1] = derive[1]
+
+
+def apply_first_boundary_conditions(a, d, correcting_f, correcting_f_derivative, f, h, q, derive):
+    a[0][0] = -correcting_f(1, q[0])*h[0] + correcting_f_derivative(1, q[0])*h[0]
+    a[0][1] = correcting_f(1, q[0])*h[0]
+
+    a[-1][-2] = correcting_f(1, q[-1])*h[-1]
+    a[-1][-1] = -correcting_f(1, q[-1])*h[-1] + correcting_f_derivative(1, q[-1])*h[-1]
+
+    d[0] = (f[1] - f[0])/h[0] - derive[0]
+    d[-1] = derive[-1] - (f[-1] - f[-2])/h[0]
 
 
 def spline_M(x, xs, function, d, correcting_f, correcting_f_derivative, q):
@@ -107,47 +121,44 @@ def norm(val1, val2):
 
 
 if __name__ == '__main__':
-    xs = np.linspace(0, 1, 2000)
-    xs_ = np.linspace(0, 1, 11)
+    xs = np.linspace(-2, 1, 2000)
+    xs_ = np.linspace(-2, 1, 4)
     q = [0] * len(xs_)
     q1 = [1]*len(xs_)
-    der = [derives2[1](xs_[0]), derives2[1](xs_[-1])]
+    der = [derives[0](-2), derives[0](1)]
+    x_table = [-1.75, -0.65, 0.88]
     experiments = [
-        (rational, rational_d, rational_d2, q, 'Кубический сплайн'),
-        (rational, rational_d, rational_d2, q[:8] + [10, 5.49] + q[10:], 'Рациональный сплайн'),
-        (exponent, exponent_d, exponent_d2, q[:8] + [10, 7.2] + q[10:], 'Экспоненциальный сплайн'),
-        (hyperbola, hyperbola_d, hyperbola_d_2, q1[:8] + [10, 10] + q1[10:], 'Гиперболический сплайн'),
-        (variable_order, variable_order_d, variable_order_d2,  q[:8] + [10, 7.6] + q[10:], 'Сплайн переменного порядка')]
+        (rational, rational_d, rational_d2, q, 'Кубический сплайн')]
 
     for c_f, c_d, c_d_2, q, title in experiments:
-        #ys_spline = [spline_M(x, xs_, functions[1], der, c_f, c_d, q) for x in xs]
-        #ys_spline = [derivative_1_M(x, xs_, functions[1], der, c_f, c_d, q) for x in xs]
-        ys_spline = [derivative_2_M(x, xs_, functions[1], der, c_f, c_d_2, q) for x in xs]
-        #ys3 = [functions[1](x) for x in xs]
-        #ys3 = [derives[1](x) for x in xs]
-        ys3 = [derives2[1](x) for x in xs]
-        #dots = [functions[1](x) for x in xs_]
+        #ys_spline = [spline_M(x, xs_, functions[0], der, c_f, c_d, q) for x in xs[1:-1]]
+        ys_spline = [derivative_1_M(x, xs_, functions[0], der, c_f, c_d, q) for x in xs[1:-1]]
+        #ys_spline = [derivative_2_M(x, xs_, functions[1], der, c_f, c_d_2, q) for x in xs]
+        #ys3 = [functions[0](x) for x in xs[1:-1]]
+        ys3 = [derives[0](x) for x in xs[1:-1]]
+        #ys3 = [derives2[1](x) for x in xs]
+        #dots = [functions[4](x) for x in xs_]
 
         print(title + ': ' + repr(norm(ys3, ys_spline)))
+        for x in x_table:
+            print((derives[0](x) - derivative_1_M(x, xs_, functions[0], der, c_f, c_d, q)).__abs__(), end=' ')
+        print()
 
         #plt.scatter(xs_, dots, 20)
-        plt.plot(xs, ys_spline, 'b')
-        plt.plot(xs, ys3, 'r--')
+        plt.plot(xs[1:-1], ys_spline, 'b')
+        plt.plot(xs[1:-1], ys3, 'r--')
         plt.title(title)
         plt.show()
 
     experiments = [
         (rational, rational_d, rational_d2, rational_int, q1),
-        (rational, rational_d, rational_d2, rational_int, q1[:8] + [10, 5.49] + q1[10:]),
-        (exponent, exponent_d, exponent_d2, exponent_int, q1[:8] + [10, 7.2] + q1[10:]),
-        (hyperbola, hyperbola_d, hyperbola_d_2, hyperbola_int, q1[:8] + [10, 10] + q1[10:]),
-        (variable_order, variable_order_d, variable_order_d2, variable_order_int, q[:8] + [10, 7.6] + q[10:])]
+        (rational, rational_d, rational_d2, rational_int, [5, 3] + q1[2:22] + [3, 5]),
+        (exponent, exponent_d, exponent_d2, exponent_int, [5, 3] + q1[2:22] + [3, 5]),
+        (hyperbola, hyperbola_d, hyperbola_d_2, hyperbola_int, [7, 4] + q1[2:22] + [4, 7]),
+        (variable_order, variable_order_d, variable_order_d2, variable_order_int, [5, 3] + q1[2:22] + [3, 5])]
 
-    int = integrate.quad(functions[1], 0, 1)[0]
+    int = integrate.quad(functions[0], -2, 1)[0]
     print(int)
     for c_f, c_d, c_d_2, c_int, q in experiments:
-        print(int_M(xs_, functions[1], der, c_f, c_d, c_int, q))
-        print(abs(int - int_M(xs_, functions[1], der, c_f, c_d, c_int, q)))
-
-
-
+        print(int_M(xs_, functions[0], der, c_f, c_d, c_int, q))
+        print(abs(int - int_M(xs_, functions[0], der, c_f, c_d, c_int, q)))
