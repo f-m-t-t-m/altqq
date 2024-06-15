@@ -121,27 +121,31 @@ def norm(val1, val2):
 
 
 if __name__ == '__main__':
-    xs = np.linspace(-2, 1, 2000)
-    xs_ = np.linspace(-2, 1, 4)
+    xs = np.linspace(0, pi/3, 2000)
+    xs_ = np.linspace(0, pi/3, 19)
     q = [0] * len(xs_)
-    q1 = [1]*len(xs_)
-    der = [derives[0](-2), derives[0](1)]
-    x_table = [-1.75, -0.65, 0.88]
+    q1 = [1]* len(xs_)
+    der = [derives[3](0), derives[3](pi/3)]
+    x_table = [0.3, 0.5]
     experiments = [
-        (rational, rational_d, rational_d2, q, 'Кубический сплайн')]
+        (rational, rational_d, rational_d2, q, 'Кубический сплайн'),
+        (rational, rational_d, rational_d2, q[:7] + [1, 100, 100, 1] + q[11:], 'Рациональный сплайн'),
+        (exponent, exponent_d, exponent_d2, q[:7] + [1, 100, 100, 1] + q[11:], 'Экспоненциальный сплайн'),
+        (hyperbola, hyperbola_d, hyperbola_d_2, q1[:7] + [1, 100, 100, 1] + q1[11:], 'Гиперболический сплайн'),
+        (variable_order, variable_order_d, variable_order_d2, q[:7] + [1, 100, 100, 1] + q[11:], 'Сплайн переменного порядка')]
 
     for c_f, c_d, c_d_2, q, title in experiments:
-        #ys_spline = [spline_M(x, xs_, functions[0], der, c_f, c_d, q) for x in xs[1:-1]]
-        ys_spline = [derivative_1_M(x, xs_, functions[0], der, c_f, c_d, q) for x in xs[1:-1]]
+        #ys_spline = [spline_M(x, xs_, functions[3], der, c_f, c_d, q) for x in xs[1:-1]]
+        ys_spline = [derivative_1_M(x, xs_, functions[3], der, c_f, c_d, q) for x in xs[1:-1]]
         #ys_spline = [derivative_2_M(x, xs_, functions[1], der, c_f, c_d_2, q) for x in xs]
-        #ys3 = [functions[0](x) for x in xs[1:-1]]
-        ys3 = [derives[0](x) for x in xs[1:-1]]
+        #ys3 = [functions[3](x) for x in xs[1:-1]]
+        ys3 = [derives[3](x) for x in xs[1:-1]]
         #ys3 = [derives2[1](x) for x in xs]
-        #dots = [functions[4](x) for x in xs_]
+        #dots = [functions[3](x) for x in xs_]
 
         print(title + ': ' + repr(norm(ys3, ys_spline)))
         for x in x_table:
-            print((derives[0](x) - derivative_1_M(x, xs_, functions[0], der, c_f, c_d, q)).__abs__(), end=' ')
+            print((derives[3](x) - derivative_1_M(x, xs_, functions[3], der, c_f, c_d, q)).__abs__(), end=' ')
         print()
 
         #plt.scatter(xs_, dots, 20)
@@ -152,13 +156,13 @@ if __name__ == '__main__':
 
     experiments = [
         (rational, rational_d, rational_d2, rational_int, q1),
-        (rational, rational_d, rational_d2, rational_int, [5, 3] + q1[2:22] + [3, 5]),
-        (exponent, exponent_d, exponent_d2, exponent_int, [5, 3] + q1[2:22] + [3, 5]),
-        (hyperbola, hyperbola_d, hyperbola_d_2, hyperbola_int, [7, 4] + q1[2:22] + [4, 7]),
-        (variable_order, variable_order_d, variable_order_d2, variable_order_int, [5, 3] + q1[2:22] + [3, 5])]
+        (rational, rational_d, rational_d2, rational_int, q1[:7] + [1, 100, 100, 1] + q1[11:]),
+        (exponent, exponent_d, exponent_d2, exponent_int, q1[:7] + [1, 100, 100, 1] + q1[11:]),
+        (hyperbola, hyperbola_d, hyperbola_d_2, hyperbola_int, q1[:7] + [1, 100, 100, 1] + q1[11:]),
+        (variable_order, variable_order_d, variable_order_d2, variable_order_int, q1[:7] + [1, 100, 100, 1] + q1[11:])]
 
-    int = integrate.quad(functions[0], -2, 1)[0]
+    int = integrate.quad(functions[3], 0, pi/3)[0]
     print(int)
     for c_f, c_d, c_d_2, c_int, q in experiments:
-        print(int_M(xs_, functions[0], der, c_f, c_d, c_int, q))
-        print(abs(int - int_M(xs_, functions[0], der, c_f, c_d, c_int, q)))
+        print(int_M(xs_, functions[3], der, c_f, c_d, c_int, q))
+        print(abs(int - int_M(xs_, functions[3], der, c_f, c_d, c_int, q)))
