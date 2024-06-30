@@ -75,10 +75,10 @@ if __name__ == '__main__':
         #     print(derivative_2_M(x, xs_, functions[1], der, c_f, c_d, c_d_2, q), end=' ')
         #     print((derivative_2_M(x, xs_, functions[1], der, c_f, c_d, c_d_2, q) - derives2[1](x)).__abs__())
 
-        plt.plot(xs, ys_spline, 'b')
-        plt.plot(xs, ys3, 'r--')
-        plt.title(title)
-        plt.show()
+        # plt.plot(xs, ys_spline, 'b')
+        # plt.plot(xs, ys3, 'r--')
+        # plt.title(title)
+        # plt.show()
 
     # experiments = [
     #     (rational, rational_d, rational_d2, rational_int, q1),
@@ -93,16 +93,16 @@ if __name__ == '__main__':
     #     print(int_M(xs_, functions[1], der, c_f, c_d, c_int, q), end=' ')
     #     print(abs(int - int_M(xs_, functions[1], der, c_f, c_d, c_int, q)))
 
-    d4 = lambda x: 100000000*((-1+math.e**(200)))**(-1)*e**(100+-100*x)+-100000000*((-1+math.e**(200)))**(-1)*math.e**(100+100*x)
-    h = xs_[1] - xs_[0]
-    M = _calc_M(xs_, functions[1], [derives2[1](0), derives2[1](1) - d4(1)*h**2/12], rational, rational_d, q)
-    max1 = 0
-    max2 = 0
-    max3 = 0
-    for i in range(1, len(M)-1):
-        print(((M[i+1] + 10*M[i] + M[i-1]) / 12 - derives2[1](xs_[i])).__abs__(), end=' ')
-        max1 = max(max1, (M[i+1] + 10*M[i] + M[i-1]) / 12 - derives2[1](xs_[i]).__abs__())
-        print((M[i] - derives2[1](xs_[i])).__abs__(), end=' ')
-        max2 = max(max2, (M[i] - derives2[1](xs_[i])).__abs__())
-        print(((functions[1](xs_[i+1]) - 2*functions[1](xs_[i]) + functions[1](xs_[i-1])) / h**2 - derives2[1](xs_[i])).__abs__(), end=' ')
-        print(xs_[i])
+    # d4 = lambda x: 100000000*((-1+math.e**(200)))**(-1)*e**(100+-100*x)+-100000000*((-1+math.e**(200)))**(-1)*math.e**(100+100*x)
+    # h = xs_[1] - xs_[0]
+    # M = _calc_M(xs_, functions[1], [derives2[1](0), derives2[1](1) - d4(1)*h**2/12], rational, rational_d, q)
+    # max1 = 0
+    # max2 = 0
+    # max3 = 0
+    # for i in range(1, len(M)-1):
+    #     print(((M[i+1] + 10*M[i] + M[i-1]) / 12 - derives2[1](xs_[i])).__abs__(), end=' ')
+    #     max1 = max(max1, (M[i+1] + 10*M[i] + M[i-1]) / 12 - derives2[1](xs_[i]).__abs__())
+    #     print((M[i] - derives2[1](xs_[i])).__abs__(), end=' ')
+    #     max2 = max(max2, (M[i] - derives2[1](xs_[i])).__abs__())
+    #     print(((functions[1](xs_[i+1]) - 2*functions[1](xs_[i]) + functions[1](xs_[i-1])) / h**2 - derives2[1](xs_[i])).__abs__(), end=' ')
+    #     print(xs_[i])
